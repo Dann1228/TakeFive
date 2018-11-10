@@ -1,0 +1,230 @@
+﻿@model TabkeFiveWebApplication.Models.ViewModels.ProductViewModels
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+
+
+@functions
+{
+    public string ConverKindFun(string kind)
+    {
+
+        string retVal = null;
+
+        switch (kind)
+        {
+            case "1":
+                retVal = "課程";
+                break;
+            case "2":
+                retVal = "影片";
+                break;
+            case "3":
+                retVal = "二手書";
+                break;
+        }
+
+
+        return retVal;
+    }
+
+
+
+    public string ConverCategory(string kind, string Category)
+    {
+
+        string retVal = null;
+
+        switch (kind)
+        {
+            case "1":
+
+
+                switch (Category)
+                {
+                    case "1":
+                        retVal = "英文";
+                        break;
+                    case "2":
+                        retVal = "日文";
+                        break;
+                    case "3":
+                        retVal = "韓文";
+                        break;
+                }
+
+
+
+                break;
+            case "2":
+
+                switch (Category)
+                {
+                    case "1":
+                        retVal = "英文影片";
+                        break;
+                    case "2":
+                        retVal = "日文影片";
+                        break;
+                    case "3":
+                        retVal = "韓文影片";
+                        break;
+                }
+
+
+                break;
+            case "3":
+
+                switch (Category)
+                {
+                    case "1":
+                        retVal = "英文二手書";
+                        break;
+                    case "2":
+                        retVal = "日文二手書";
+                        break;
+                    case "3":
+                        retVal = "韓文二手書";
+                        break;
+                }
+
+
+
+                break;
+        }
+
+
+        return retVal;
+    }
+
+
+}
+
+
+<h2>Details</h2>
+
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SelectedKinds)
+        </dt>
+
+        <dd>
+            @ConverKindFun(@Html.DisplayFor(model => model.SelectedKinds).ToString())
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SelectedCategories)
+        </dt>
+
+        <dd>
+            @ConverCategory(@Html.DisplayFor(model => model.SelectedKinds).ToString(),
+                            @Html.DisplayFor(model => model.SelectedCategories).ToString())
+        </dd>
+        
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Intro)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Intro)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.State)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.State)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Score)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Score)
+        </dd>
+
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Picture)
+        </dt>
+
+        <dd>
+            @Html.Partial("_ShowPhotoPartial")
+        </dd>
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VidioUrl)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VidioUrl)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @*
+        @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    *@
+
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+@section Scripts
+{
+
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+    <script>
+
+        function readURL(input) {
+
+            if (input.files && input.files[0]) {
+
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('File1').prev().att('src', e.target.result);
+                };
+                reader.readAsDataURL(input.files[0]);
+
+            }
+        }
+
+
+        $("#File1").change(function () {
+            readURL(this);
+        });
+
+    </script>
+
+}

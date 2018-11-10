@@ -1,0 +1,381 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@*@model IEnumerable<TabkeFiveWebApplication.Models.ViewModels.ProductViewModels>*@
+@model PagedList.IPagedList<TabkeFiveWebApplication.Models.ViewModels.ProductViewModels>
+@{
+    ViewBag.Title = "Index";
+    var currentCart = TabkeFiveWebApplication.Models.Cart.Operation.GetCurrentCart();
+
+    //List<int> cartIds = new List<int>();
+    //foreach (var cartitem in currentCart)
+    //{
+    //    cartIds.Add(cartitem.Id);
+    //}
+}
+
+
+
+@functions
+{
+    public string ConverKindFun(string kind)
+    {
+
+        string retVal = null;
+
+        switch (kind)
+        {
+            case "1":
+                retVal = "課程";
+                break;
+            case "2":
+                retVal = "影片";
+                break;
+            case "3":
+                retVal = "二手書";
+                break;
+        }
+
+
+        return retVal;
+    }
+
+
+
+    public string ConverCategory(string kind, string Category)
+    {
+
+        string retVal = null;
+
+        switch (kind)
+        {
+            case "1":
+
+
+                switch (Category)
+                {
+                    case "1":
+                        retVal = "英文";
+                        break;
+                    case "2":
+                        retVal = "日文";
+                        break;
+                    case "3":
+                        retVal = "韓文";
+                        break;
+                }
+
+
+
+                break;
+            case "2":
+
+                switch (Category)
+                {
+                    case "1":
+                        retVal = "英文影片";
+                        break;
+                    case "2":
+                        retVal = "日文影片";
+                        break;
+                    case "3":
+                        retVal = "韓文影片";
+                        break;
+                }
+
+
+                break;
+            case "3":
+
+                switch (Category)
+                {
+                    case "1":
+                        retVal = "英文二手書";
+                        break;
+                    case "2":
+                        retVal = "日文二手書";
+                        break;
+                    case "3":
+                        retVal = "韓文二手書";
+                        break;
+                }
+
+
+
+                break;
+        }
+
+
+        return retVal;
+    }
+
+
+}
+
+
+
+<div class="jumbotron">
+    <h1>WelCome TakeFive</h1>
+    @*<div class="row">
+        <div class="col-sm-6 col-md-4">
+            <ul class="nav nav-pills">
+
+                <li>@Html.ActionLink("全部", "Index", new { kindId = 0 })</li>
+                <li>@Html.ActionLink("課程", "Index", new { kindId = 1 })</li>
+                <li>@Html.ActionLink("影片", "Index", new { kindId = 2 })</li>
+
+                
+                    <li>@Html.ActionLink("二手書", "Index", new { kindId = 3 })</li>
+                
+
+            </ul>
+        </div>
+    </div>*@
+</div>
+
+
+
+
+@*<div class="container">
+        <div class="row">
+            <div class="col-sm-8">
+                <div id="myCarousel" class="carousel slide" data-ride="carousel">
+
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators">
+                        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#myCarousel" data-slide-to="1"></li>
+                    </ol>
+
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner" role="listbox">
+
+                        <div class="item active">
+                            <iframe width="100%" height="80%" src="https://www.youtube.com/embed/E03Xn6Xk0z8" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                            <!--img src="https://placehold.it/800x400?text=IMAGE" alt="Image"-->
+
+                        </div>
+
+                        <div class="item">
+                            <iframe width="100%" height="80%" src="https://www.youtube.com/embed/QXgfpYacG3M" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                        </div>
+                    </div>
+
+                    <!-- Left and right controls -->
+                    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>*@
+
+
+
+<div class="row shopping-main">
+
+    @foreach (var item in Model)
+    {
+
+        <div class="col-sm-6 col-md-2">
+            <div class="thumbnail">
+
+                <div id="product-popover-@item.PId" data-html="true" class="pop popover-div" data-toggle="popover" data-placement="right">
+                    <h3>@Html.DisplayFor(modelItem => item.Name)</h3>
+
+                    @*<p>產品編號：@Html.DisplayFor(modelItem => item.PId)</p>*@
+
+                    <p>
+                        種類：@ConverKindFun(@Html.DisplayFor(modelItem => item.SelectedKinds).ToString())
+                    </p>
+
+                    <p>
+                        類別：@ConverCategory(@Html.DisplayFor(modelItem => item.SelectedKinds).ToString(),
+@Html.DisplayFor(modelItem => item.SelectedCategories).ToString())
+                    </p>
+
+                    <p>定價：@item.Price.ToString("0") 元</p>
+
+                    <p>評分：@Html.DisplayFor(modelItem => item.Score)</p>
+
+                    @*
+                        @Html.Partial("~/Views/Product/_ShowPhotoPartial.cshtml", item)
+                    *@
+                    <br>
+                    <br>
+
+                    <p>
+                        <img src="@Html.Action("ShowPhoto","Product", new { id=item.PId })" class="shopping-img" />
+                    </p>
+
+                    <div id="@string.Format("CurrentCart{0}",item.PId)" class="CurrentCart">
+                        @Html.Action("CurrentCart", "Cart", new { id = item.PId })
+                    </div>
+
+                    @*@if (cartIds.Contains(item.PId))
+                        {
+                            <div id="view-buy" onclick="AddToCart(@item.PId);" class="view-li-div">
+                                <span class="view-span">前往購物車</span>
+                            </div>
+                        }
+                        else
+                        {
+                            <div id="view-buy" onclick="AddToCart(@item.PId);" class="view-li-div">
+                                <span class="view-span">加入購物車</span>
+                            </div>
+                        }*@
+
+
+                    @*<a onclick="AddToCart('@item.PId')"
+                        class="btn btn-success" role="button">加入購物車</a>*@
+                    @Html.ActionLink("content", "View", "ShoppingCart", new { id = item.PId }, new { @class = "btn btn-primary" })
+                </div>
+            </div>
+        </div>
+        <br />
+        @*<div class="shopping-pagelist thumbnail">
+                <div class="shopping-pagelist-main">
+                    <div class="shopping-pagelist-title">
+                        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                    </div>
+                    <div class="shopping-pagelist-body">
+                        @Html.PagedListPager(Model, page => Url.Action("Index", new { item.SelectedKinds, item.SelectedCategories, page }))
+                    </div>
+                </div>
+            </div>*@
+        //  彈跳畫面
+        @*<div class="modal fade bs-example-modal-lg-@item.PId" tabindex=" -1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg-@item.PId">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+
+                            <h3 class="modal-title" id="myModalLabel">
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </h3>
+
+
+                            @Html.Partial("~/Views/Product/_ShowPhotoPartial.cshtml", item)
+
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="panel panel-info">
+
+                                <div class="panel-heading">
+                                    <h4>定價</h4>
+                                </div>
+                                <div class="panel-body">
+                                    <p>@item.Price.ToString("0") 元</p>
+                                </div>
+
+
+                                <div class="panel-heading">
+                                    <h4>內容介紹</h4>
+                                </div>
+                                <div class="panel-body">
+                                    <p>@Html.DisplayFor(modelItem => item.Intro)</p>
+                                </div>
+
+
+                                <div class="panel-heading">
+                                    <h4> 影像</h4>
+                                </div>
+                                <div class="panel-body">
+
+                                    <p>
+                                        影像：
+                                        <iframe width="100%" height="50%"
+                                                src=@Html.DisplayFor(modelItem => item.VidioUrl)
+                                                frameborder="0" allow="autoplay; encrypted-media"
+                                                allowfullscreen></iframe>
+
+                                    </p>
+
+
+                                </div>
+
+
+                                <div class="panel-footer">
+                                    <p>
+                                        評分：@Html.DisplayFor(modelItem => item.Score)｜
+                                        狀態：@Html.DisplayFor(modelItem => item.State)
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <a onclick="AddToCart('@item.PId')" href="javascript:void(0);" class="btn btn-success" role="button">加入購物車</a>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">關閉</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>*@
+
+
+        //  popover product
+        <div class="bs-example-modal-lg-@item.PId  product-popover-@item.PId   product-popover" data-html="true" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="product-popver-main">
+                <div class="product-popver-head">
+                    <div class="popover-content-title">
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </div>
+                </div>
+                <div class="product-popver-body">
+                    <div class="popover-content-intro">
+                        @Html.DisplayFor(modelItem => item.Intro)
+                    </div>
+                    <div class="popover-content-price">
+                        <span>Score :@item.Score</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<div class="shopping-pagelist">
+    <div class="shopping-pagelist-main">
+        <div class="shopping-pagelist-title">
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+        </div>
+        <div class="shopping-pagelist-body">
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { Model.FirstOrDefault().SelectedKinds, Model.FirstOrDefault().SelectedCategories, page }))
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $(".pop").popover({ trigger: "hover focus", html: true, animation: false })
+                .on("mouseenter", function () {
+                    var _this = this;
+
+                    var popoverClass = "." + this.id;
+                    var datacontent = $(popoverClass).html();
+                    $(this).attr("data-content", datacontent);
+
+                    $(this).popover("show");
+                    $(".popover").on("mouseleave", function () {
+                        $(_this).popover('hide');
+                    });
+                }).on("mouseleave", function () {
+                    var _this = this;
+                    setTimeout(function () {
+                        if (!$(".popover:hover").length) {
+                            $(_this).popover("hide");
+                        }
+                    }, 50);
+                });
+        });
+
+    </script>
+}
+

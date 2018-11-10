@@ -1,0 +1,75 @@
+﻿@model IEnumerable<TFDBLibrary.producttbl>
+
+@foreach (var item in Model)
+{
+    <div>
+        <div id="productgrade">
+            @Html.Action("ProductGrade", "Product",new { pid=item.pid})
+        </div>
+
+        <div class="grade">
+            <div class="grade-main">
+                <img id="star1" src='@Url.Content("~/Images/star.jpg")' />
+                <img id="star2" src='@Url.Content("~/Images/star.jpg")' />
+                <img id="star3" src='@Url.Content("~/Images/star.jpg")' />
+                <img id="star4" src='@Url.Content("~/Images/star.jpg")' />
+                <img id="star5" src='@Url.Content("~/Images/star.jpg")' />
+            </div>
+            <div class="grade-member" id="startotalnum">
+                <div id="stargrade" >0</div>
+            </div>
+
+            <button id="btnSendGrade" onclick="SendProductGrade(@item.pid);" class="btn btn-primary">送出</button>
+        </div>
+    </div>
+}
+
+    <script>
+    $(document).ready(function () {
+        for (i = 1; i <= 5; i++) {
+            var starid = "star" + i
+            document.getElementById(starid).addEventListener("mouseover", mouseoverstar);
+            document.getElementById(starid).addEventListener("mouseout", mouseoutstar);
+        }
+    });
+        function SendProductGrade(pid) {
+            var grade = $('#stargrade').text();
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("SendProductGrade","Product")',
+            data: { 'pid': pid, 'grade': grade }
+        }).done(function (result) {
+            $('#productgrade').html(result);
+            $('#stargrade').text("0");
+            for (i = 1; i <= 5; i++) {
+            var starid = "star" + i;
+            document.getElementById(starid).setAttribute("src", '@Url.Content("~/Images/star.jpg")');
+            @*$("'#" + starid + "'").attr("src",'@Url.Content("~/Images/star.jpg")');*@
+        }
+        });
+    }
+    function mouseoverstar() {
+        for (i = 1; i <= 5; i++) {
+            var starid = "star" + i;
+            document.getElementById(starid).setAttribute("src", '@Url.Content("~/Images/star.jpg")');
+            @*$("'#" + starid + "'").attr("src",'@Url.Content("~/Images/star.jpg")');*@
+        }
+        document.getElementById("startotalnum").innerHTML = "評分 : <div id='"+"stargrade'>" + 0 + "</div>";
+
+        var overnum = (this.id).substring(4);
+        for (i = 1; i <= overnum; i++) {
+            var starid = "star" + i;
+            document.getElementById(starid).setAttribute("src", '@Url.Content("~/Images/chngstar.jpg")');
+            @*$("'#" + starid + "'").attr("src",'@Url.Content("/Images/chngstar.jpg")');*@
+        }
+        document.getElementById("startotalnum").innerHTML = "評分 : <div id='" + "stargrade'>" + overnum + "</div>";
+    }
+    function mouseoutstar() {
+        //for (i = 1; i <= 5; i++) {
+        //    var starid = "star" + i;
+        //    document.getElementById(starid).setAttribute("src", "/Images/star.gif");
+        //}
+        //document.getElementById("startotalnum").innerHTML = "Star : <span>" + 0 + "</span>";
+    }
+</script>
+    

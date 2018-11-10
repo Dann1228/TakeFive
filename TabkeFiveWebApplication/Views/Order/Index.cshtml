@@ -1,0 +1,188 @@
+﻿@model TabkeFiveWebApplication.Models.ViewModels.OrderViewModel
+
+@{
+    ViewBag.Title = "結帳";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    //取得目前購物車資料
+    var cart = TabkeFiveWebApplication.Models.Cart.Operation.GetCurrentCart();
+
+
+}
+@section Styles
+    {
+    <style>
+        #formhoz {
+            margin: auto;
+        }
+    </style>
+}
+
+<h2>@ViewBag.Title</h2>
+
+
+@* 列出購物車內商品，讓使用者作最後確認 *@
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>品名</th>
+            <th>定價</th>
+            <th>數量</th>
+            <th>小計</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var pd in cart)
+        {
+            <tr>
+                <td>@pd.Name</td>
+                <td>@pd.Price.ToString("0")</td>
+                <td>@pd.Quantity</td>
+                <td>@pd.Amount.ToString("0")</td>
+            </tr>
+        }
+        <tr>
+            <td colspan="3"></td>
+            <td>總計</td>
+            <td>@cart.TotalAmount.ToString("0")</td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+@if (cart.Count > 0)
+{
+    <hr />
+    @* 使用者填寫寄送資訊 *@
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="TotalAmount" value="@cart.TotalAmount" />
+        <div class="form-horizontal container" id="formhoz">
+            <h4>付款資訊</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.MName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.MName, new { htmlAttributes = new { @class = "form-control", @value = "", @id = "MName" } })
+                    @Html.ValidationMessageFor(model => model.MName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.MPhone, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.MPhone, new { htmlAttributes = new { @class = "form-control", @value = "", @id = "MPhone" } })
+                    @Html.ValidationMessageFor(model => model.MPhone, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.MAddr, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.MAddr, new { htmlAttributes = new { @class = "form-control", @value = "", @id = "MAddr" } })
+                    @Html.ValidationMessageFor(model => model.MAddr, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CreditNumber1, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="row">
+                    <div style="float:left;margin:3px;">
+
+                        @Html.EditorFor(model => model.CreditNumber1, new { @value = "", @id = "CreditNumber1" })
+                        @Html.ValidationMessageFor(model => model.CreditNumber1, "", new { @class = "text-danger" })
+
+                    </div>
+                    <div style="float:left;margin:3px;">
+                        @Html.EditorFor(model => model.CreditNumber2, new { @value = "", @id = "CreditNumber2" })
+                        @Html.ValidationMessageFor(model => model.CreditNumber2, "", new { @class = "text-danger" })
+                    </div>
+                    <div style="float:left ;margin:3px;">
+                        @Html.EditorFor(model => model.CreditNumber3, new { @value = "", @id = "CreditNumber3" })
+                        @Html.ValidationMessageFor(model => model.CreditNumber3, "", new { @class = "text-danger" })
+                    </div>
+                    <div style="float:left;margin:3px;">
+                        @Html.EditorFor(model => model.CreditNumber4, new { @value = "", @id = "CreditNumber4" })
+                        @Html.ValidationMessageFor(model => model.CreditNumber4, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+            </div>
+
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.VaildMonth, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.VaildMonth, new { htmlAttributes = new { @class = "form-control", @value = "", @id = "VaildMonth" } })
+                    @Html.ValidationMessageFor(model => model.VaildMonth, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.VaildYear, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.VaildYear, new { htmlAttributes = new { @class = "form-control", @value = "", @id = "VaildYear" } })
+                    @Html.ValidationMessageFor(model => model.VaildYear, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.VaildCode, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.VaildCode, new { htmlAttributes = new { @class = "form-control", @value = "", @id = "VaildCode" } })
+                    @Html.ValidationMessageFor(model => model.VaildCode, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Memo, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Memo, new { @class = "form-control", @value = "", @id = "Memo" })
+                    @Html.ValidationMessageFor(model => model.Memo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="確定購買" class="btn btn-default" />
+                    <input type="button" class="btn btn-danger" id="demo" value="DEMO" />
+                </div>
+            </div>
+        </div>
+    }
+}
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#demo").click(function () {
+                $("#MName").val("劉施施")
+                $("#MPhone").val("0985668888")
+                $("#MAddr").val("台北市大安區106復興南路一段390號2,3,15樓 ")
+                $("#CreditNumber1").val("0125")
+                $("#CreditNumber2").val("7578")
+                $("#CreditNumber3").val("5547")
+                $("#CreditNumber4").val("3585")
+                $("#VaildMonth").val("08")
+                $("#VaildYear").val("2020")
+                $("#VaildCode").val("150")
+                $("#Memo").val("一二三四五")
+
+            });
+        });
+
+    </script>
+
+}

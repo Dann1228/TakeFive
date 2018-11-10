@@ -1,0 +1,94 @@
+﻿@model TabkeFiveWebApplication.Controllers.RoleViewModel
+
+@{
+    ViewBag.Title = "CreateRole";
+}
+@section Styles
+    {
+    <style>
+        #loginForm {
+            width: 1000px;
+            height: 100px;
+            margin: 0 auto
+        }
+
+
+        .baslik {
+            color: #fff;
+            text-align: center;
+            font-family: 'Fira Sans', sans-serif;
+        }
+
+        .arkalogin {
+            width: 550px;
+            text-align: center;
+            background: #fff;
+            height: 300px;
+            padding: 10px;
+            margin: 50px auto;
+            border-radius: 10px;
+            box-shadow: 8px 10px 0px rgba(0,0,0,0.1);
+        }
+
+        .loginbaslik {
+            color: #888888;
+            text-align: left;
+            font-size: 19px;
+            margin-top: 15px;
+        }
+
+        #aaa {
+            background: #DE6262; /* fallback for old browsers */
+            background: -webkit-linear-gradient(to bottom, #FFB88C, #DE6262); /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to bottom, #FFB88C, #DE6262); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            float: left;
+            height: 800px;
+            width: 100%;
+            padding: 50px 0;
+        }
+    </style>
+
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+<section style="height: 80vh;" id="aaa">
+    <div class="arkalogin">
+        <div class="loginbaslik">權限新增</div>
+        <hr style="border: 1px solid #ccc;">
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        <div style="margin:0 auto;width:1000px;">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        </div>
+
+
+
+
+
+</section>
+
+
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

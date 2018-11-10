@@ -1,0 +1,42 @@
+﻿@using Microsoft.AspNet.Identity
+
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <ul class="nav navbar-nav navbar-right">
+
+            <li class="dropdown ">
+
+                <img style="margin-left: 13px;margin-top: 10px; width:030px; height:30px;" src="@Url.Content("~/Images/card_icon_3.jpg")" class="dropdown-toggle" data-toggle="dropdown" href="#" />
+
+                <ul class="dropdown-menu">
+                    <li> @Html.ActionLink("Hello " + Html.Action("GetUserName", "Account", new { id = User.Identity.GetUserId() }) + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
+                    <li>@Html.ActionLink("修改資料", "Edit", "Account")</li>
+                    @if (User.IsInRole("admin"))
+                    {
+                        <li>@Html.ActionLink("產品變更", "Index", "Product")</li>
+                    }
+                    <li>@Html.ActionLink("我的產品", "UserProduct", "Product")</li>
+                    <li>@Html.ActionLink("我的筆記", "Index", "Note")</li>
+                    <li>@Html.ActionLink("購買紀錄", "MyOrder", "Order")</li>
+                    @if (User.IsInRole("admin"))
+                    {
+                        <li>@Html.ActionLink("後台", "Index", "SampleUser")</li>
+                    }
+                    <li><a href="javascript:document.getElementById('logoutForm').submit()">登出</a></li>
+                </ul>
+            </li>
+
+        </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("註冊", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("登入", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}

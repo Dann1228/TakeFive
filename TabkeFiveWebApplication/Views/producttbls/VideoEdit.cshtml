@@ -1,0 +1,96 @@
+﻿@model TFDBLibrary.producttbl
+
+@{
+    ViewBag.Title = "VideoEdit";
+}
+
+<h2>影片修改</h2>
+
+@using (Html.BeginForm("VideoEdit", "producttbls", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.pid)
+        @Html.HiddenFor(model => model.kind)
+        @Html.HiddenFor(model => model.category)
+        @Html.HiddenFor(model => model.price)
+        @Html.HiddenFor(model => model.state)
+        @Html.HiddenFor(model => model.score)
+        @Html.HiddenFor(model => model.mid)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.intro, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.intro, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.intro, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.picture, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @{
+                    var base64 = Convert.ToBase64String(Model.picture);
+                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                }
+
+                <img src="@imgSrc" id="imgScr" width="200" height="200" />
+                <input type="file" accept="image/*" name="f_image" id="f_image" />
+            </div>
+        </div>
+
+        <div class="form-group" style="display:none">
+            @Html.LabelFor(model => model.vidiourl, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.vidiourl, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.vidiourl, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("往返", "Index")
+</div>
+@section Scripts
+{
+    <script>
+
+        $(document).ready(function () {
+            $("#f_image").on("change", function () {
+                readURL(this);
+            });
+        });
+
+        function readURL(input) {
+
+            if (input.files && input.files[0]) {
+
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#imgScr').attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+
+            }
+        }
+    </script>
+}

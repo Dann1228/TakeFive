@@ -1,0 +1,204 @@
+﻿@model IEnumerable<TabkeFiveWebApplication.Models.ViewModels.ProductViewModels>
+
+@{
+    ViewBag.Title = "Index";
+    
+}
+
+
+@functions
+{
+    public string ConverKindFun(string kind)
+    {
+
+        string retVal = null;
+
+        switch (kind)
+        {
+            case "1":
+                retVal = "課程";
+                break;
+            case "2":
+                retVal = "影片";
+                break;
+            case "3":
+                retVal = "二手書";
+                break;
+        }
+
+
+        return retVal;
+    }
+
+
+
+    public string ConverCategory(string kind, string Category)
+    {
+
+        string retVal = null;
+
+        switch (kind)
+        {
+            case "1":
+
+
+                switch (Category)
+                {
+                    case "1":
+                        retVal = "英文";
+                        break;
+                    case "2":
+                        retVal = "日文";
+                        break;
+                    case "3":
+                        retVal = "韓文";
+                        break;
+                }
+
+
+
+                break;
+            case "2":
+
+                switch (Category)
+                {
+                    case "1":
+                        retVal = "英文影片";
+                        break;
+                    case "2":
+                        retVal = "日文影片";
+                        break;
+                    case "3":
+                        retVal = "韓文影片";
+                        break;
+                }
+
+
+                break;
+            case "3":
+
+                switch (Category)
+                {
+                    case "1":
+                        retVal = "英文二手書";
+                        break;
+                    case "2":
+                        retVal = "日文二手書";
+                        break;
+                    case "3":
+                        retVal = "韓文二手書";
+                        break;
+                }
+
+
+
+                break;
+        }
+
+
+        return retVal;
+    }
+
+
+}
+
+
+<h2>Index</h2>
+@if (User.IsInRole("admin"))
+{
+<p>
+    @Html.ActionLink("建立新產品", "Create")
+</p>
+}
+
+
+<table class="table">
+    <tr>
+
+        
+        
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedKinds)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedCategories)
+        </th>
+
+
+
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Intro)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Picture)
+        </th>
+
+        @*<th>
+            @Html.DisplayNameFor(model => model.VidioUrl)
+        </th>*@
+        <th>立即前往</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            
+
+            <td>
+                
+                @ConverKindFun(@Html.DisplayFor(modelItem => item.SelectedKinds).ToString())
+            </td>
+            <td>
+                
+
+                @ConverCategory(@Html.DisplayFor(modelItem => item.SelectedKinds).ToString(),
+                                @Html.DisplayFor(modelItem => item.SelectedCategories).ToString())
+
+            </td>
+
+
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Intro)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+
+
+            <td>
+
+                @Html.Partial("_ShowPhotoPartial", item)
+
+            </td>
+
+
+            @*<td>
+                @Html.DisplayFor(modelItem => item.VidioUrl)
+            </td>*@
+            <td>
+
+                @if (User.IsInRole("admin"))
+                {
+                    @Html.ActionLink("修改", "Edit", new { id = item.PId }) 
+                    @Html.ActionLink("詳細資訊", "Details", new { id = item.PId }) 
+                    @Html.ActionLink("刪除", "Delete", new { id = item.PId })
+                }
+
+                @Html.ActionLink("前往", "View", "ShoppingCart", new { id = item.PId }, new { @class = "btn btn-primary" })
+            </td>
+        </tr>
+    }
+
+</table>

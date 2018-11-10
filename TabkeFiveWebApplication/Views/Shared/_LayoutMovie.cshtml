@@ -1,0 +1,315 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Take Five</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link rel="icon" href="~/Images/TestLogo.png" type="image/x-icon" />
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/TakeFiveCss")
+
+</head>
+<body>
+    <!-------------------------------------------------------------------------->
+    <header>
+
+        <section id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+            <nav class="navbar navbar-default view-navbar ">
+                <div class="">
+                    @*<div class="container">*@
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#TakeFiveNavbar">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+
+
+                        <a href="@Url.Action("Index","Home")">
+                            <img id="chat1" class="chatibon" style="height:50px;width:100px" src=@Url.Content("~/Images/TestLogo.png") />
+                        </a>
+
+
+                    </div>
+                    <form class="navbar-form navbar-left" action="@Url.Action("SearchProduct","Product")" role="search">
+                        <div class="form-group">
+                            <input type="text" name="keyword" id="keyword" class="form-control" placeholder="Search">
+                        </div>
+                        <input type="submit" class="btn btn-default" value="搜尋課程">
+                    </form>
+
+                    @*<div class="container-fluid">*@
+
+                    <div class="">
+                        @*<div class="navbar-header ">
+            </div>*@
+                        <ul id="TakeFiveNavbar" class="nav navbar-nav navbar-collapse collapse navbar-onright">
+                            @*<li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        會員專區
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" id="link">
+                        <li><a href="index.html">Page 1-1</a></li>
+                        <li><a href="#">Page 1-2</a></li>
+                        <li><a href="#">Page 1-3</a></li>
+                    </ul>
+                </li>*@
+                            @*<li class="dropdown mega-dropdown active">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
+                    <div class="dropdown-menu mega-dropdown-menu">
+                        <div class="container-fluid">
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="men">
+                                    <ul class="nav-list list-inline">
+                                        <li><a href="#"><img src=""><span>Ａ</span></a></li>
+                                        <li><a href="#"><img src=""><span>Ｂ</span></a></li>
+                                        <li><a href="#"><img src=""><span>Ｃ</span></a></li>
+                                        <li><a href="#"><img src=""><span>Ｄ</span></a></li>
+                                        <li><a href="#"><img src=""><span>Ｅ</span></a></li>
+                                        <li><a href="#"><img src=""><span>Ｆ</span></a></li>
+                                    </ul>
+                                </div>
+                                <div class="tab-pane" id="women">
+                                    <ul class="nav-list list-inline">
+                                        <li><a href="#"><img src=""><span>Ａ</span></a></li>
+                                        <li><a href="#"><img src=""><span>Ｂ</span></a></li>
+                                        <li><a href="#"><img src=""><span>Ｃ</span></a></li>
+                                        <li><a href="#"><img src=""><span>Ｄ</span></a></li>
+                                    </ul>
+                                </div>
+                                <div class="tab-pane" id="kids">
+                                    <ul class="nav-list list-inline">
+                                        <li><a href="#"><img src=""><span>Ａ</span></a></li>
+                                        <li><a href="#"><img src=""><span>Ｂ</span></a></li>
+                                        <li><a href="#"><img src=""><span>Ｃ</span></a></li>
+                                        <li><a href="#"><img src=""><span>Ｄ</span></a></li>
+                                        <li><a href="#"><img src=""><span>Ｅ</span></a></li>
+
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="active"><a href="#men" role="tab" data-toggle="tab">英文</a></li>
+                            <li><a href="#women" role="tab" data-toggle="tab">日文</a></li>
+                            <li><a href="#kids" role="tab" data-toggle="tab">韓文</a></li>
+
+                        </ul>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        我的課程
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>@Html.ActionLink("網路下單", "Index", "ShoppingCart")</li>
+
+
+                    </ul>
+                </li>
+                <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            論壇區
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu ">
+                            <li><a href="#">論壇區</a></li>
+                            <li><a href="#">我要發文</a></li>
+
+                        </ul>
+                    </li>*@
+                            <li>
+                                @Html.ActionLink("商品", "Index", "ShoppingCart")
+                            </li>
+                            <li id="Cart">
+                                @Html.Partial("_CartPartial")
+                            </li>
+                            <li>
+                                @Html.Partial("_LoginPartial")
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </nav>
+        </section>
+
+    </header>
+    <div class="navbar-height"></div>
+    @*<div class="view-content">
+        @RenderBody()
+        <hr />
+    </div>*@
+    <div id="layout-main" class="layout-main">
+        <div class="layoutbody view-content">
+            @RenderBody()
+        </div>
+
+        <hr />
+        <footer class="">
+            <!-- Footer -->
+            <section id="footer">
+                <div class="container">
+                    <div class="row text-center text-xs-center text-sm-left text-md-left">
+                        <div class="col-xs-12 col-sm-4 col-md-4">
+                            <h5>聯繫我們</h5>
+                            <ul class="list-unstyled quick-links">
+                                <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>地址：台北市大安區XX路XX巷XX弄X號</a></li>
+                                <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>郵件：XXX@gmail.com</a></li>
+                                <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>FAQ</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-xs-12 col-sm-4 col-md-4">
+                            <h5>客服專線</h5>
+                            <ul class="list-unstyled quick-links">
+                                <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>02-25XXXXXX</a></li>
+                                <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>工作時間：09:00-18:00</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-xs-12 col-sm-4 col-md-4">
+                            <h5>關於我們</h5>
+                            <ul class="list-unstyled quick-links">
+                                <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>公司簡介</a></li>
+                                <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>經營理念</a></li>
+                                <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>合作夥伴</a></li>
+                                <li><a href="https://wwwe.sunlimetech.com" title="Design and developed by"><i class="fa fa-angle-double-right"></i>Imprint</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-5">
+                            <ul class="list-unstyled list-inline social text-center">
+                                <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-facebook"></i></a></li>
+                                <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-twitter"></i></a></li>
+                                <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-instagram"></i></a></li>
+                                <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-google-plus"></i></a></li>
+                                <li class="list-inline-item"><a href="javascript:void();" target="_blank"><i class="fa fa-envelope"></i></a></li>
+                            </ul>
+                        </div>
+                        <hr>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center text-white">
+                            <p><u><a href="https://www.nationaltransaction.com/">National Transaction Corporation</a></u> is a Registered MSP/ISO of Elavon, Inc. Georgia [a wholly owned subsidiary of U.S. Bancorp, Minneapolis, MN]</p>
+                            <p class="h6">&copy All right Reversed.<a class="text-green ml-2" href="https://www.sunlimetech.com" target="_blank">Sunlimetech</a></p>
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+            </section>
+            <!-- ./Footer -->
+        </footer>
+    </div>
+
+
+    @*@Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/ TakeFiveJS")
+        @RenderSection("scripts", required: false)*@
+
+
+    @*@Scripts.Render("~/bundles/bootstrap")*@
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/ TakeFiveJS")
+    @RenderSection("scripts", required: false)
+
+    <script type="text/javascript">
+        /* 購物車操作JS */
+
+        //加入商品至購物車
+        function AddToCart(Id) {
+             $.ajax({
+                type: 'POST',
+                url: '@Url.Action("AddToCart","Cart")',
+                data: { Id: Id }
+            }).done(function (msg) {
+                $("li#Cart").html(msg);
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("CurrentCart", "Cart")',
+                    data: { Id: Id }
+                }).done(function (result) {
+                    var cart = "#CurrentCart" + Id;
+                    $(cart).html(result);
+                });
+            });
+        }
+
+        //將商品從購物車移除
+        function RemoveFromCart(Id)
+        {
+             $.ajax({
+                type: 'POST',
+                url: '@Url.Action("RemoveFromCart", "Cart")',
+                data: { Id: Id }
+            }).done(function (msg) {
+                $("li#Cart").html(msg);
+                 $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("CurrentCart", "Cart")',
+                    data: { Id: Id }
+                }).done(function (result) {
+                    var cart = "#CurrentCart" + Id;
+                    $(cart).html(result);
+                });
+            });
+        }
+
+        //清空購物車
+        function ClearCart()
+        {
+            //todo  clear cart
+           $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ClearCart", "Cart")',
+                data: {}
+            }).done(function (msg) {
+                $("li#Cart").html(msg);
+                var carts = document.getElementsByClassName('CurrentCart');
+                for (i = 0; i < carts.count; i++) {
+                    var cartid = carts[i].id.replace("CurrentCart", "");
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("CurrentCart", "Cart")',
+                        data: { Id: cartid }
+                    }).done(function (result) {
+                        carts[i].innerHTML = result;
+                    });
+                }
+            });
+        }
+
+        function ClearCart() {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ClearCart", "Cart")',
+                data: {}
+            }).done(function (msg) {
+                $("li#Cart").html(msg);
+            });
+            var carts = $('.CartAdded');
+            $.each(carts, function (index, value) {
+                cartid = this.id;
+                $.ajax({
+                    type: 'GET',
+                    url:'@Url.Action("CurrentCart", "Cart")',
+                    data: { Id: this.id }
+                }).done(function (model) {
+                    var cart = "#CurrentCart" + value.id;
+                    $(cart).html(model);
+                });
+            });
+        }
+    </script>
+
+</body>
+</html>

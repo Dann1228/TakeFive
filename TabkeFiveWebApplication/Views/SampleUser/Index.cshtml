@@ -1,0 +1,71 @@
+﻿@model TabkeFiveWebApplication.ViewModels.SampleUserViewModel
+
+@using PagedList.Mvc;
+
+
+@{
+    /**/
+
+    ViewBag.Title = "Index";
+}
+
+<h2>會員資料管理</h2>
+@using (Html.BeginForm("Index", "SampleUser", FormMethod.Post))
+{
+    <div class="form-inline">
+        @Html.LabelFor(model => model.selectModel.UserName)
+        @Html.TextBoxFor(model => model.selectModel.UserName)
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <button class="btn btn-danger" type="submit">搜尋</button>
+    </div>
+}
+@*<form action="Index" method="post"></form>*@
+
+@if (Model.requestModel != null)
+{
+    <table class="table table-bordered" style="background-color:#ffffff">
+        <thead>
+            <tr>
+                <th>@Html.LabelFor(model => model.requestModel.FirstOrDefault().Name)</th>
+                <th>@Html.LabelFor(model => model.requestModel.FirstOrDefault().UserName)</th>
+                <th>@Html.LabelFor(model => model.requestModel.FirstOrDefault().phNumber)</th>
+                <th>@Html.LabelFor(model => model.requestModel.FirstOrDefault().Birthday)</th>
+                <th>@Html.LabelFor(model => model.requestModel.FirstOrDefault().Email)</th>
+                <th>功能</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.requestModel)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.UserName</td>
+                    <td>@item.phNumber</td>
+                    <td>@item.Birthday</td>
+                    <td>@item.Email</td>
+                    <td>
+                        @using (@Html.BeginForm("Edit", "SampleUser", FormMethod.Post))
+                        {
+                            <input type="text" class="hidden" id="id" name="id" value="@item.Id" />
+                            <button class="btn btn-danger">修改</button>
+                        }
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+    @Html.PagedListPager(Model.requestModel, page => Url.Action("index", new { pageIndex = page }),
+        new PagedListRenderOptions
+        {
+            LinkToFirstPageFormat = "<< 第一頁",
+            LinkToPreviousPageFormat = "< 前一頁",
+            LinkToNextPageFormat = "後一頁 >",
+            LinkToLastPageFormat = "最末頁 >>",
+            DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+            DisplayLinkToLastPage = PagedListDisplayMode.Always,
+            DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+            DisplayLinkToNextPage = PagedListDisplayMode.Always,
+        })
+}

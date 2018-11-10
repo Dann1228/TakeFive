@@ -1,0 +1,166 @@
+﻿@model IEnumerable<TabkeFiveWebApplication.Models.ViewModels.DiscussViewModel>
+<div id="toscrollDiv">
+    @Html.Action("SendMsg", "Discuss", new { Model.FirstOrDefault().PId })
+</div>
+   @foreach (var discussMain in Model)
+    {
+<div class="row discussmain-article-main">
+    <div class="col-sm-2 text-center">
+        <img src="@Html.Action("ShowPhoto","Account", new { id=discussMain.MId })"class="img-circle" height="65" width="65" alt="Avatar" />
+        @*<img src="bandmember.jpg" class="img-circle" height="65" width="65" alt="Avatar">*@
+    </div>
+    <div class="col-sm-10">
+        <h4>@Html.Action("GetUserName", "Discuss", new { id = discussMain.MId })
+            <small>@discussMain.DCrateDate</small></h4>
+        <p>@discussMain.DContent</p>
+    <br>
+</div>
+    @*<div class="discussmain-article-article">
+        <div class="discussmain-article-share discussmain-article-account">@Html.Action("GetUserName", "Discuss", new { id = discussMain.MId }) </div>
+        <div class="discussmain-article-share discussmain-article-title">@discussMain.DContent</div>
+        <div class="discussmain-article-share">
+            <label class="discussmain-article-grade">Good</label>
+            <label class="discussmain-article-grade">@discussMain.DGreat</label>
+            <label class="discussmain-article-time">@discussMain.DCrateDate</label>
+        </div>
+    </div>*@
+</div>
+    }
+
+@*<div class="row">
+    <div class="col-sm-2 text-center">
+        <img src="~/Images/19.jpg" class="img-circle" height="65" width="65" alt="Avatar">
+    </div>
+    <div class="col-sm-10">
+        <h4>Anja <small>Sep 29, 2015, 9:12 PM</small></h4>
+        <p>Keep up the GREAT work! I am cheering for you!! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <br>
+    </div>
+    <div class="col-sm-2 text-center">
+        <img src="~/Images/20.jpg" class="img-circle" height="65" width="65" alt="Avatar">
+    </div>
+    <div class="col-sm-10">
+        <h4>Anja <small>Sep 29, 2015, 9:12 PM</small></h4>
+        <p>Keep up the GREAT work! I am cheering for you!! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <br>
+    </div>
+    <div class="col-sm-2 text-center">
+        <img src="~/Images/21.jpg" class="img-circle" height="65" width="65" alt="Avatar">
+    </div>
+    <div class="col-sm-10">
+        <h4>Anja <small>Sep 29, 2015, 9:12 PM</small></h4>
+        <p>Keep up the GREAT work! I am cheering for you!! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <br>
+    </div>
+    <div class="col-sm-2 text-center">
+        <img src="~/Images/22.jpg" class="img-circle" height="65" width="65" alt="Avatar">
+    </div>
+    <div class="col-sm-10">
+        <h4>Anja <small>Sep 29, 2015, 9:12 PM</small></h4>
+        <p>Keep up the GREAT work! I am cheering for you!! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <br>
+    </div>
+    <div class="col-sm-2 text-center">
+        <img src="~/Images/23.jpg" class="img-circle" height="65" width="65" alt="Avatar">
+    </div>
+    <div class="col-sm-10">
+        <h4>Anja <small>Sep 29, 2015, 9:12 PM</small></h4>
+        <p>Keep up the GREAT work! I am cheering for you!! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <br>
+    </div>
+    <div class="col-sm-2 text-center">
+        <img src="~/Images/24.jpg" class="img-circle" height="65" width="65" alt="Avatar">
+    </div>
+    <div class="col-sm-10">
+        <h4>Anja <small>Sep 29, 2015, 9:12 PM</small></h4>
+        <p>Keep up the GREAT work! I am cheering for you!! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <br>
+    </div>
+    <div class="col-sm-2 text-center">
+        <img src="~/Images/25.jpg" class="img-circle" height="65" width="65" alt="Avatar">
+    </div>
+    <div class="col-sm-10">
+        <h4>John Row <small>Sep 25, 2015, 8:25 PM</small></h4>
+        <p>I am so happy for you man! Finally. I am looking forward to read about your trendy life. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <br>
+        <p><span class="badge">1</span> Comment:</p><br>
+        <div class="row">
+            <div class="col-sm-2 text-center">
+                <img src="bird.jpg" class="img-circle" height="65" width="65" alt="Avatar">
+            </div>
+            <div class="col-xs-10">
+                <h4>Nested Bro <small>Sep 25, 2015, 8:28 PM</small></h4>
+                <p>Me too! WOW!</p>
+                <br>
+            </div>
+        </div>
+    </div>
+</div>*@
+
+
+@*<table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.p_id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.d_title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.d_cont)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.d_grade)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.d_createDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.d_editDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.d_kind)
+            </th>
+            <th></th>
+        </tr>
+     <div id="toscrollDiv">
+        @Html.Action("SendMsg", "Discuss", new { item.PId })
+    </div>
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.p_id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.d_title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.d_cont)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.d_grade)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.d_createDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.d_editDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.d_kind)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.d_id }) |
+                @Html.ActionLink("Details", "Details", new { id=item.d_id }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.d_id })
+            </td>
+        </tr>
+    }
+
+    </table>*@

@@ -1,0 +1,37 @@
+﻿@model TabkeFiveWebApplication.Models.ViewModels.ProductViewModels
+
+@if (Model.Picture != null)
+    {
+
+
+<img src='@Html.Action("ShowPhoto","Product", new { id=Model.PId })' 
+     style="width:40px;height:30px"
+     @*title="@Html.DisplayFor(model => model.PId)"*@ />
+
+
+}
+
+else
+{
+        <img src="@Url.Content("~/Images/NO Image Available.jpg")" sytle="width:40px;height:30px" />
+
+    }
+
+
+@functions
+{
+    public string DisplayImage(byte[] data)
+    {
+        string imgSrc = null;
+        if (data != null)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                ms.Write(data, 0, data.Length);
+                string imgBase64 = Convert.ToBase64String(ms.ToArray());
+                imgSrc = string.Format("data:image/jpg;base64,{0}", imgBase64);
+            }
+        }
+        return imgSrc;
+    }
+}

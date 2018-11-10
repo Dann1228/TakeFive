@@ -1,0 +1,20 @@
+﻿@using System.Web.Mvc;
+@using System.Text;
+
+@functions
+{
+    public string DisplayImage(byte[] data)
+    {
+        string imgSrc = null;
+        if (data != null)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                ms.Write(data, 0, data.Length);
+                string imgBase64 = Convert.ToBase64String(ms.ToArray());
+                imgSrc = string.Format("data:image/jpg;base64,{0}", imgBase64);
+            }
+        }
+        return imgSrc;
+    }
+}

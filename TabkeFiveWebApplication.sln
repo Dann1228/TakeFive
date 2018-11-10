@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2003
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TabkeFiveWebApplication", "TabkeFiveWebApplication\TabkeFiveWebApplication.csproj", "{BC960166-17BB-4DB6-A323-B28441F82E3A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFDBLibrary", "TFDBLibrary\TFDBLibrary.csproj", "{17542877-0FB4-4246-804B-B4175F983CCD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|ARM = Debug|ARM
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|ARM = Release|ARM
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BC960166-17BB-4DB6-A323-B28441F82E3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC960166-17BB-4DB6-A323-B28441F82E3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC960166-17BB-4DB6-A323-B28441F82E3A}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{BC960166-17BB-4DB6-A323-B28441F82E3A}.Debug|ARM.Build.0 = Debug|Any CPU
+		{BC960166-17BB-4DB6-A323-B28441F82E3A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BC960166-17BB-4DB6-A323-B28441F82E3A}.Debug|x64.Build.0 = Debug|Any CPU
+		{BC960166-17BB-4DB6-A323-B28441F82E3A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BC960166-17BB-4DB6-A323-B28441F82E3A}.Debug|x86.Build.0 = Debug|Any CPU
+		{BC960166-17BB-4DB6-A323-B28441F82E3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC960166-17BB-4DB6-A323-B28441F82E3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC960166-17BB-4DB6-A323-B28441F82E3A}.Release|ARM.ActiveCfg = Release|Any CPU
+		{BC960166-17BB-4DB6-A323-B28441F82E3A}.Release|ARM.Build.0 = Release|Any CPU
+		{BC960166-17BB-4DB6-A323-B28441F82E3A}.Release|x64.ActiveCfg = Release|Any CPU
+		{BC960166-17BB-4DB6-A323-B28441F82E3A}.Release|x64.Build.0 = Release|Any CPU
+		{BC960166-17BB-4DB6-A323-B28441F82E3A}.Release|x86.ActiveCfg = Release|Any CPU
+		{BC960166-17BB-4DB6-A323-B28441F82E3A}.Release|x86.Build.0 = Release|Any CPU
+		{17542877-0FB4-4246-804B-B4175F983CCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17542877-0FB4-4246-804B-B4175F983CCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17542877-0FB4-4246-804B-B4175F983CCD}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{17542877-0FB4-4246-804B-B4175F983CCD}.Debug|ARM.Build.0 = Debug|Any CPU
+		{17542877-0FB4-4246-804B-B4175F983CCD}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{17542877-0FB4-4246-804B-B4175F983CCD}.Debug|x64.Build.0 = Debug|Any CPU
+		{17542877-0FB4-4246-804B-B4175F983CCD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{17542877-0FB4-4246-804B-B4175F983CCD}.Debug|x86.Build.0 = Debug|Any CPU
+		{17542877-0FB4-4246-804B-B4175F983CCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17542877-0FB4-4246-804B-B4175F983CCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17542877-0FB4-4246-804B-B4175F983CCD}.Release|ARM.ActiveCfg = Release|Any CPU
+		{17542877-0FB4-4246-804B-B4175F983CCD}.Release|ARM.Build.0 = Release|Any CPU
+		{17542877-0FB4-4246-804B-B4175F983CCD}.Release|x64.ActiveCfg = Release|Any CPU
+		{17542877-0FB4-4246-804B-B4175F983CCD}.Release|x64.Build.0 = Release|Any CPU
+		{17542877-0FB4-4246-804B-B4175F983CCD}.Release|x86.ActiveCfg = Release|Any CPU
+		{17542877-0FB4-4246-804B-B4175F983CCD}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B78E6C56-20F2-46A1-862F-3761D751D2D2}
+	EndGlobalSection
+EndGlobal

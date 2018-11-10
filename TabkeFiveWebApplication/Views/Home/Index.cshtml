@@ -1,0 +1,662 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@section styles
+    {
+    <style>
+        .fade-carousel {
+            position: relative;
+            height: 100vh;
+        }
+
+            .fade-carousel .carousel-inner .item {
+                height: 100vh;
+            }
+
+            .fade-carousel .carousel-indicators > li {
+                margin: 0 2px;
+                background-color: #f39c12;
+                border-color: #f39c12;
+                opacity: .7;
+            }
+
+                .fade-carousel .carousel-indicators > li.active {
+                    width: 10px;
+                    height: 10px;
+                    opacity: 1;
+                }
+
+        .fade-carousel {
+            position: relative;
+            height: 100vh;
+        }
+
+            .fade-carousel .carousel-inner .item {
+                height: 100vh;
+            }
+
+            .fade-carousel .carousel-indicators > li {
+                margin: 0 2px;
+                background-color: #f39c12;
+                border-color: #f39c12;
+                opacity: .7;
+            }
+
+                .fade-carousel .carousel-indicators > li.active {
+                    width: 10px;
+                    height: 10px;
+                    opacity: 1;
+                }
+
+        .hero {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            z-index: 3;
+            color: #fff;
+            text-align: center;
+            text-transform: uppercase;
+            text-shadow: 1px 1px 0 rgba(0,0,0,.75);
+            -webkit-transform: translate3d(-50%,-50%,0);
+            -moz-transform: translate3d(-50%,-50%,0);
+            -ms-transform: translate3d(-50%,-50%,0);
+            -o-transform: translate3d(-50%,-50%,0);
+            transform: translate3d(-50%,-50%,0);
+        }
+
+            .hero h1 {
+                font-size: 6em;
+                font-weight: bold;
+                margin: 0;
+                padding: 0;
+            }
+
+        .fade-carousel .carousel-inner .item .hero {
+            opacity: 0;
+            -webkit-transition: 2s all ease-in-out .1s;
+            -moz-transition: 2s all ease-in-out .1s;
+          
+            -o-transition: 2s all ease-in-out .1s;
+            transition: 2s all ease-in-out .1s;
+        }
+
+        .fade-carousel .carousel-inner .item.active .hero {
+            opacity: 1;
+            -webkit-transition: 2s all ease-in-out .1s;
+            -moz-transition: 2s all ease-in-out .1s;
+         
+            -o-transition: 2s all ease-in-out .1s;
+            transition: 2s all ease-in-out .1s;
+        }
+
+
+        .overlay {
+            position: absolute;
+            width: 100%;
+            height: 50%;
+            z-index: 2;
+            background-color: #080d15;
+            opacity: 0;
+        }
+
+
+        .btn.btn-lg {
+            padding: 10px 40px;
+        }
+
+        .btn.btn-hero,
+        .btn.btn-hero:hover,
+        .btn.btn-hero:focus {
+            color: #f5f5f5;
+            background-color: #1abc9c;
+            border-color: #1abc9c;
+            outline: none;
+            margin: 20px auto;
+        }
+
+        /********************************/
+        /*       Slides backgrounds     */
+        /********************************/
+        .fade-carousel .slides .slide-1,
+        .fade-carousel .slides .slide-2,
+        .fade-carousel .slides .slide-3 {
+            height: 100vh;width:120vw;
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+        }
+
+        .fade-carousel .slides .slide-1 {
+            background-image: url(https://ununsplash.imgix.net/photo-1416339134316-0e91dc9ded92?q=75&fm=jpg&s=883a422e10fc4149893984019f63c818);
+        }
+
+        .fade-carousel .slides .slide-2 {
+            background-image: url(https://ununsplash.imgix.net/photo-1416339684178-3a239570f315?q=75&fm=jpg&s=c39d9a3bf66d6566b9608a9f1f3765af);
+        }
+
+        .fade-carousel .slides .slide-3 {
+            background-image: url(https://ununsplash.imgix.net/photo-1416339276121-ba1dfa199912?q=75&fm=jpg&s=9bf9f2ef5be5cb5eee5255e7765cb327);
+        }
+        /*
+            課程
+        */
+        #team {
+            background: #eee !important;
+            padding: 60px;
+        }
+
+        .btn-primary:hover,
+        .btn-primary:focus {
+            background-color: #108d6f;
+            border-color: #108d6f;
+            box-shadow: none;
+            outline: none;
+        }
+
+        .btn-primary {
+            color: #fff;
+            background-color: #007b5e;
+            border-color: #007b5e;
+        }
+
+
+        section .section-title {
+            text-align: center;
+            color: #007b5e;
+            margin-bottom: 50px;
+            text-transform: uppercase;
+        }
+
+        #team .card {
+            border: none;
+            background: #ffffff;
+        }
+
+        .image-flip:hover .backside,
+        .image-flip.hover .backside {
+            -webkit-transform: rotateY(0deg);
+            -moz-transform: rotateY(0deg);
+            -o-transform: rotateY(0deg);
+            -ms-transform: rotateY(0deg);
+            transform: rotateY(0deg);
+            border-radius: .25rem;
+        }
+
+        .image-flip:hover .frontside,
+        .image-flip.hover .frontside {
+            -webkit-transform: rotateY(180deg);
+            -moz-transform: rotateY(180deg);
+            -o-transform: rotateY(180deg);
+            transform: rotateY(180deg);
+        }
+
+        .mainflip {
+            -webkit-transition: 1s;
+            -webkit-transform-style: preserve-3d;
+          
+            -moz-transition: 1s;
+            -moz-transform: perspective(1000px);
+        
+            transition: 1s;
+            transform-style: preserve-3d;
+            position: relative;
+        }
+
+        .frontside {
+            position: relative;
+            -webkit-transform: rotateY(0deg);
+            -ms-transform: rotateY(0deg);
+            z-index: 2;
+            margin-bottom: 30px;
+        }
+
+        .backside {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: white;
+            -webkit-transform: rotateY(-180deg);
+            -moz-transform: rotateY(-180deg);
+            -o-transform: rotateY(-180deg);
+            -ms-transform: rotateY(-180deg);
+            transform: rotateY(-180deg);
+            -webkit-box-shadow: 5px 7px 9px -4px rgb(158, 158, 158);
+            -moz-box-shadow: 5px 7px 9px -4px rgb(158, 158, 158);
+            box-shadow: 5px 7px 9px -4px rgb(158, 158, 158);
+        }
+
+        .frontside,
+        .backside {
+            -webkit-backface-visibility: hidden;
+            -moz-backface-visibility: hidden;
+           
+            backface-visibility: hidden;
+            -webkit-transition: 1s;
+            -webkit-transform-style: preserve-3d;
+            -moz-transition: 1s;
+          
+            -o-transition: 1s;
+          
+          
+            transition: 1s;
+            transform-style: preserve-3d;
+        }
+
+            .frontside .card,
+            .backside .card {
+                min-height: 312px;
+            }
+
+                .backside .card a {
+                    font-size: 18px;
+                    color: #007b5e !important;
+                }
+
+                .frontside .card .card-title,
+                .backside .card .card-title {
+                    color: #007b5e !important;
+                }
+
+                .frontside .card .card-body img {
+                    width: 120px;
+                    height: 120px;
+                    border-radius: 50%;
+                }
+        /*
+                           腳註
+                       */
+        #footer {
+            background: #007b5e !important;
+        }
+
+            #footer h5 {
+                padding-left: 10px;
+                border-left: 3px solid #eeeeee;
+                padding-bottom: 6px;
+                margin-bottom: 20px;
+                color: #ffffff;
+            }
+
+            #footer a {
+                color: #ffffff;
+                text-decoration: none !important;
+                background-color: transparent;
+            
+            }
+
+            #footer ul.social li {
+                padding: 3px 0;
+            }
+
+                #footer ul.social li a i {
+                    margin-right: 5px;
+                    font-size: 25px;
+                    -webkit-transition: .5s all ease;
+                    -moz-transition: .5s all ease;
+                    transition: .5s all ease;
+                }
+
+                #footer ul.social li:hover a i {
+                    font-size: 30px;
+                    margin-top: -10px;
+                }
+
+                #footer ul.social li a,
+                #footer ul.quick-links li a {
+                    color: #ffffff;
+                }
+
+                    #footer ul.social li a:hover {
+                        color: #eeeeee;
+                    }
+
+            #footer ul.quick-links li {
+                padding: 3px 0;
+                -webkit-transition: .5s all ease;
+                -moz-transition: .5s all ease;
+                transition: .5s all ease;
+            }
+
+                #footer ul.quick-links li:hover {
+                    padding: 3px 0;
+                    margin-left: 5px;
+                    font-weight: 700;
+                }
+
+                #footer ul.quick-links li a i {
+                    margin-right: 5px;
+                }
+
+                #footer ul.quick-links li:hover a i {
+                    font-weight: 700;
+                }
+        /**/
+        .card-banner {
+            display: flex;
+            position: relative;
+            overflow: hidden;
+            background-color: #fff;
+            background-size: cover;
+            border-radius: 5px;
+        }
+
+            .card-banner .card-body {
+                background-size: cover;
+                position: relative;
+                z-index: 10;
+            }
+
+
+        /* overlay effects */
+        .overlay-cover {
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            position: absolute;
+            width: 100%;
+        }
+
+        .overlay {
+            background-color: rgba(0,0,0,0.65);
+            z-index: 10;
+            padding: 1.25rem;
+            color: #fff;
+        }
+
+        .overlay-grad {
+            position: relative;
+        }
+
+            .overlay-grad::before {
+                position: absolute;
+                content: "";
+                display: block;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: #e83e8c;
+                background: -webkit-gradient(linear, left top, right bottom, from(#007bff), to(#e83e8c));
+                background: linear-gradient(to bottom right, #007bff, #e83e8c);
+                opacity: .6;
+                transition: .5s;
+            }
+
+            .overlay-grad:hover:before {
+                opacity: .9;
+            }
+
+        #btn {
+            display: table;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #h3 {
+            display: table;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+}
+
+<!------ Include the above in your HEAD tag ---------->
+<div class="carousel fade-carousel slide" data-ride="carousel" data-interval="4000" id="bs-carousel">
+    <!-- Overlay -->
+    <div class="overlay"></div>
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+        <li data-target="#bs-carousel" data-slide-to="0" class="active"></li>
+        <li data-target="#bs-carousel" data-slide-to="1"></li>
+        <li data-target="#bs-carousel" data-slide-to="2"></li>
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner">
+        <div class="item slides active">
+            <div class="slide-1"></div>
+            <div class="hero">
+                <hgroup>
+                    <h1>TakeFive</h1>
+                    <h3>Get start your next awesome project</h3>
+                </hgroup>
+                <button class="btn btn-hero btn-lg" role="button">See all features</button>
+            </div>
+        </div>
+        <div class="item slides">
+            <div class="slide-2"></div>
+            <div class="hero">
+
+            </div>
+        </div>
+        <div class="item slides">
+            <div class="slide-3"></div>
+
+        </div>
+    </div>
+</div>
+
+<h3 id="h3">五星課程瀏覽</h3>
+<section id="team" class="pb-5">
+    <div class="container">
+        <div class="row">
+            @foreach (var a in ViewBag.kindt)
+            {
+                <!-- Team member -->
+                <div class="col-md-2">
+                    <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
+                        <div class="mainflip">
+                            <div class="frontside">
+                                <div class="card">
+                                    <div class="card-body text-center">
+                                        <p><img class=" img-fluid" src="@Url.Action("photo","Home",new { id=a.pid})" alt="card image"></p>
+                                        <h4 class="card-title">@a.name</h4>
+                                        <p class="card-text">單價:@a.price</p>
+                                        <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="backside" style="word-break:break-all">
+                                <div class="card">
+                                    <div class="card-body text-center mt-4">
+                                        <h4 class="card-title">Sunlimetech</h4>
+                                        <p class="card-text" id="backtext">@a.intro</p>
+                                        <button type="button" class="btn  btn-primary" onclick="location.href='@Url.Action( "View", "ShoppingCart",new { id=a.pid})'">前往課程</button>
+                                        <ul class="list-inline">
+                                            <li class="list-inline-item">
+                                                <a class="social-icon text-xs-center" target="_blank" href="#">
+                                                    <i class="fa fa-facebook"></i>
+                                                </a>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <a class="social-icon text-xs-center" target="_blank" href="#">
+                                                    <i class="fa fa-twitter"></i>
+                                                </a>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <a class="social-icon text-xs-center" target="_blank" href="#">
+                                                    <i class="fa fa-skype"></i>
+                                                </a>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <a class="social-icon text-xs-center" target="_blank" href="#">
+                                                    <i class="fa fa-google"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</section>
+<div id="btn">
+    <button id="btna" type="button" class="btn btn-danger" style="margin:5px;">英文</button>
+    <button id="btnb" type="button" class="btn btn-danger" style="margin:5px;">日文</button>
+    <button id="btnc" type="button" class="btn btn-danger" style="margin:5px;">韓文</button>
+</div>
+
+<section id="teama" class="pb-5">
+    <div class="container">
+        <div class="row">
+            @foreach (var a in ViewBag.kindt)
+            {
+                <!-- Team member -->
+                <div class="col-md-4">
+                    <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
+                        <div class="mainflip">
+                            <div class="frontside">
+                                <div class="card">
+                                    <div class="card-body text-center">
+                                        <p><img class=" img-fluid" src="@Url.Action("photo", "Home", new { id = a.pid })" alt="card image"></p>
+                                        <h4 class="card-title">@a.name</h4>
+                                        <p class="card-text">單價:@a.price</p>
+                                        <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="backside" style="word-break:break-all">
+                                <div class="card">
+                                    <div class="card-body text-center mt-4">
+                                        <h4 class="card-title">Sunlimetech</h4>
+                                        <p class="card-text" id="backtext">@a.intro</p>
+                                        <button type="button" class="btn  btn-primary" onclick="location.href='@Url.Action("View", "ShoppingCart", new { id = a.pid })'">前往課程</button>
+                                        <ul class="list-inline">
+                                            <li class="list-inline-item">
+                                                <a class="social-icon text-xs-center" target="_blank" href="#">
+                                                    <i class="fa fa-facebook"></i>
+                                                </a>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <a class="social-icon text-xs-center" target="_blank" href="#">
+                                                    <i class="fa fa-twitter"></i>
+                                                </a>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <a class="social-icon text-xs-center" target="_blank" href="#">
+                                                    <i class="fa fa-skype"></i>
+                                                </a>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <a class="social-icon text-xs-center" target="_blank" href="#">
+                                                    <i class="fa fa-google"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+            </div>
+    </div>
+</section>
+<!--------------------------------------------------------------------------------------------------------------->
+<!------ Include the above in your HEAD tag ---------->
+
+<div class="container">
+
+    <hr>
+    <div class="row">
+        <aside class="col-sm-4">
+
+            <div class="card-banner  overlay-grad" style="height:250px; background-image: url('/Images/teacher1.jpg');">
+
+            </div> <!-- card.// -->
+        </aside>
+        <aside class="col-sm-4">
+
+            <div class="card-banner" style="height:250px; background-image: url('/Images/enlishclas.jpg');">
+                <article class="overlay overlay-cover d-flex align-items-center justify-content-center">
+                    <div class="text-center">
+
+                        <a href="#" class="btn btn-warning btn-sm"> View more </a>
+                    </div>
+                </article>
+
+            </div> <!-- card.// -->
+        </aside>
+
+
+
+        <div class="card-banner " style="height:250px; background-image: url('/Images/english-class.jpg');">
+            <article class="overlay overlay-cover d-flex align-items-center justify-content-center">
+                <div class="text-center">
+
+                    <a href="#" class="btn btn-warning btn-sm"> View more </a>
+                </div>
+            </article>
+        </div> <!-- card.// -->
+
+    </div>
+</div>
+
+<br><br>
+<article class="bg-secondary mb-3">
+    <div class="card-body text-center">
+        <h2 class="text-white" style="font-weight:bold;font-family:Arial">TakeFive線上課程 <br> 準備好加入我們了嗎 </h2>
+        <p class="h5 text-white" style="font-weight:bold;font-family:Arial">
+            用線上課程培訓自己絕對穩賺不賠
+        </p>   <br>
+        <p>
+            <button type="button" class="btn  btn-warning" onclick="location.href='@Url.Action("Index", "ShoppingCart")'">learn English</button>
+        </p>
+    </div>
+    <br><br>
+</article>
+@section scripts
+    {
+    <script>
+        $(document).ready(function () {
+            $("#btna").click(function () {
+                $.ajax({
+                    type: "GET",
+                    url: "@Url.Action("FindEng","Home")"
+                }).done(function (result) {
+                    $("#teama").html(result);
+                })
+
+            });
+            $("#btnb").click(function () {
+                $.ajax({
+                    type: "GET",
+                    url: "@Url.Action("FindJap","Home")"
+                }).done(function (result) {
+                    $("#teama").html(result);
+                })
+
+            });
+            $("#btnc").click(function () {
+                $.ajax({
+                    type: "GET",
+                    url: "@Url.Action("FindKor","Home")"
+                }).done(function (result) {
+                    $("#teama").html(result);
+                })
+
+            });
+        });
+        $(function () {
+
+            var $len = 100; // 超過50個字以"..."取代
+            $(".backside p").each(function () {
+                if ($(this).text().length > $len) {
+                    var $text = $(this).text().substring(0, $len - 1) + "...";
+                    $(this).text($text);
+                }
+            });
+        });
+
+    </script>
+
+}

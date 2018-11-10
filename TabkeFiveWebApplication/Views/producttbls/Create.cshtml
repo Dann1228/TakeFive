@@ -1,0 +1,176 @@
+﻿@model TabkeFiveWebApplication.Models.ViewModels.ProductViewModels
+
+
+@using (Html.BeginForm("Create", "producttbls", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Product</h4>
+        <hr />
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SelectedKinds, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.SelectedKinds, Model.Kinds, "--選擇商品種類--")
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SelectedCategories, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.SelectedCategories, Model.Categories, "--選擇類別--")
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Intro, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Intro, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Intro, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.State, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.State, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.State, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Score, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Score, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Score, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th style="width:40%;height:60%">Picture</th>
+                            <th style="width:40%;height:60%">Video</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th style="width:40%;height:60%">
+                                <img id="imgPreview" src="@Url.Content("~/images/NoImage.jpg")" style="width:120px;height:80px" />
+                                <input type="file" name="File1" id="File1" accept="image/*" />
+                            </th>
+
+                            <th style="width:40%;height:60%">
+                                @Html.TextBox("video", null, new { @type = "file", accept = "video/*" })
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.VidioUrl, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.VidioUrl, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.VidioUrl, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+
+    </div>
+
+}
+
+@section Scripts
+{
+
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+
+        $(function () {
+            $('#SelectedKinds').change(function () {
+                var typeSelected = $('#SelectedKinds :selected').val();
+                typeSelected = typeSelected == "" ? 0 : typeSelected;
+                //When select 'optionLabel' we need to reset it to default as well. So not need
+                //travel back to server.
+                if (typeSelected == "") {
+                    $('#SelectedCategories').empty();
+                    $('#SelectedCategories').append('<option value="">--Select a language--</option>');
+                    return;
+                }
+
+                //This is where the dropdownlist cascading main function
+                $.ajax({
+                    type: "POST",
+                    url: "GetProductCategories",                    //Your Action name in the DropDownListConstroller.cs
+                    data: "{'typeSelected':" + typeSelected + "}",  //Parameter in this function, Is cast sensitive and also type must be string
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json"
+
+                }).done(function (data) {
+                    //When succeeded get data from server construct the dropdownlist here.
+                    if (data != null) {
+
+                        $('#SelectedCategories').empty();
+                        $.each(data.Categories, function (index, data) {
+                            $('#SelectedCategories').append('<option value="' + data.Value + '">' + data.Text + '</option>');
+                        });
+                    }
+                }).fail(function (response) {
+                    if (response.status != 0) {
+                        alert(response.status + " " + response.statusText);
+                    }
+                });
+            });
+        });
+
+
+    </script>
+
+    <script>
+
+        function readURL(input) {
+
+            if (input.files && input.files[0]) {
+
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#imgPreview').attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+
+            }
+
+        }
+
+        $("#File1").change(function () {
+            readURL(this);
+        });
+    </script>
+
+}

@@ -1,0 +1,64 @@
+﻿@model IEnumerable<TabkeFiveWebApplication.Models.ViewModels.OrderDetailViewModel>
+
+@{
+    ViewBag.Title = "取消訂單";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+
+
+<table class="table table-striped table-hover table-bordered" id="example">
+    <thead>
+        <tr>
+            <th>
+                商品名稱
+            </th>
+            <th>
+                商品價格
+            </th>
+            <th>
+                購買數量
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BQty)
+            </td>            
+        </tr>
+        }
+    </tbody>
+</table>
+
+
+@using (Html.BeginForm("CanelOrder", "Order", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+
+    @Html.AntiForgeryToken()
+
+<div>
+    @Html.Label("Label_CancelReason", "取消原因:")
+    <br>
+    <br>
+    @Html.TextBox("TextBox_CancelReason", "")
+
+    <input type="hidden" name="HiddenInput_PID" id="HiddenInput_PID" value="@ViewBag.Pid" />
+    
+    
+
+</div>
+
+    <input type="submit" />
+
+}

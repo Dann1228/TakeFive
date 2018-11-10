@@ -1,0 +1,324 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@*@model IEnumerable<TabkeFiveWebApplication.Models.ViewModels.ProductViewModels>*@
+@model PagedList.IPagedList<TabkeFiveWebApplication.Models.ViewModels.ProductViewModels>
+@{
+    ViewBag.Title = "Shopping Car Index";
+    var currentCart = TabkeFiveWebApplication.Models.Cart.Operation.GetCurrentCart();
+
+    //List<int> cartIds = new List<int>();
+    //foreach (var cartitem in currentCart)
+    //{
+    //    cartIds.Add(cartitem.Id);
+    //}
+}
+@section Styles{
+    <style>
+        .hover {
+            color: black;
+        }
+
+            .hover:hover {
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            }
+    </style>
+}
+
+
+
+
+
+<div style="background-image:url(@Url.Content("~/Images/Leaves-on-Wood-Background.jpg"));background-size: cover">
+
+    <img src="~/Images/15.jpg" style="width: 100%; height: 300px;" />
+    @*<div style=" background-image: url(/Images/15.jpg);"
+             width: 100%;
+             height: 230px;" class="jumbotron">
+
+            <h1 align="center" valign="center"></h1>
+
+        </div>*@
+
+
+
+
+    <div class="row shopping-main " style="margin:0 auto;width:80%;">
+
+        @foreach (var item in Model)
+        {
+
+            <div class="col-md-3 shoppintcart-main hover" style="border-style:solid; border-color:darkgreen;border-radius: 25px; margin:3px;background-color:white">
+
+                <div class="thumbnail">
+
+                    <div id="product-popover-@item.PId"
+                         data-html="true" class="pop popover-div"
+                         data-toggle="popover" data-placement="right">
+                        <div style="float:right">
+                            @Html.ActionLink("前往課程", "View", "ShoppingCart", new { id = item.PId }, new { @class = "btn btn-warning" })
+                        </div>
+                        <h3>@Html.DisplayFor(modelItem => item.Name)</h3>
+
+                        <p>
+                            種類：@ConverKindFun(@Html.DisplayFor(modelItem => item.SelectedKinds).ToString())
+                        </p>
+
+                        <p>
+                            類別：
+                            @ConverCategory(@Html.DisplayFor(modelItem => item.SelectedKinds).ToString(),
+                                            @Html.DisplayFor(modelItem => item.SelectedCategories).ToString())
+
+                        </p>
+
+                        <p>定價：@item.Price.ToString("0") 元</p>
+
+                        <p>評分：@Html.DisplayFor(modelItem => item.Score)</p>
+
+
+                        <p>
+                            <img src="@Html.Action("ShowPhoto","Product", new { id=item.PId })"
+                                 height="150" width="250" />
+                        </p>
+
+
+                        <div>
+                            <div style="float:left">
+                                <a id="aProduct-Content" class="btn btn-primary" href="@Url.Action("View","ShoppingCart",item.PId)" data-toggle="modal" data-target=".bs-example-modal-lg-@item.PId">
+                                    內容介紹
+                                </a>
+                            </div>
+
+                            <div id="@string.Format("CurrentCart{0}",item.PId)" class="CurrentCart" style="float:left;">
+                                @Html.Action("CurrentCart", "Cart", new { id = item.PId })
+
+                            </div>
+                            <br />
+
+                        </div>
+
+
+
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            //  彈跳畫面
+            <div class="modal fade bs-example-modal-lg-@item.PId"
+                 tabindex=" -1" role="dialog" aria-labelledby="myLargeModalLabel"
+                 aria-hidden="true">
+
+                <div class="modal-dialog modal-lg-@item.PId">
+
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">
+                                <span aria-hidden="true">&times;</span>
+                                <span class="sr-only">Close</span>
+                            </button>
+
+                            <h3 class="modal-title" id="myModalLabel">
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </h3>
+
+
+                            @Html.Partial("~/Views/Product/_ShowPhotoPartial.cshtml", item)
+
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="panel panel-info">
+
+                                <div class="panel-heading">
+                                    <h4>定價</h4>
+                                </div>
+
+                                <div class="panel-body">
+                                    <p>@item.Price.ToString("0") 元</p>
+                                </div>
+
+
+                                <div class="panel-heading">
+                                    <h4>內容介紹</h4>
+                                </div>
+
+                                <br>
+
+                                <div class="panel-body">
+                                    <p>@Html.DisplayFor(modelItem => item.Intro)</p>
+                                </div>
+
+
+                                <div class="panel-footer">
+                                    <p>
+                                        評分：@Html.DisplayFor(modelItem => item.Score)｜
+                                        狀態：@Html.DisplayFor(modelItem => item.State)
+                                    </p>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <div id="@string.Format("CurrentCart{0}",item.PId)" class="CurrentCart">
+                                @Html.Action("CurrentCart", "Cart", new { id = item.PId })
+                            </div>
+
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">關閉</button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+
+        }
+
+    </div>
+</div>
+
+
+    <div class="shopping-pagelist">
+        <div class="shopping-pagelist-main">
+
+            <div class="shopping-pagelist-title">
+                Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+            </div>
+            <div class="shopping-pagelist-body">
+                @Html.PagedListPager(Model, page => Url.Action("Index", new { Model.FirstOrDefault().SelectedKinds, Model.FirstOrDefault().SelectedCategories, page }))
+            </div>
+
+        </div>
+    </div>
+
+
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $(".pop").popover({ trigger: "hover focus", html: true, animation: false })
+                .on("mouseenter", function () {
+                    var _this = this;
+
+                    var popoverClass = "." + this.id;
+                    var datacontent = $(popoverClass).html();
+                    $(this).attr("data-content", datacontent);
+
+                    $(this).popover("show");
+                    $(".popover").on("mouseleave", function () {
+                        $(_this).popover('hide');
+                    });
+                }).on("mouseleave", function () {
+                    var _this = this;
+                    setTimeout(function () {
+                        if (!$(".popover:hover").length) {
+                            $(_this).popover("hide");
+                        }
+                    }, 50);
+                });
+        });
+
+    </script>
+}
+@functions
+{
+    public string ConverKindFun(string kind)
+    {
+
+        string retVal = null;
+
+        switch (kind)
+        {
+            case "1":
+                retVal = "課程";
+                break;
+            case "2":
+                retVal = "影片";
+                break;
+            case "3":
+                retVal = "二手書";
+                break;
+        }
+
+
+        return retVal;
+    }
+
+
+
+    public string ConverCategory(string kind, string Category)
+    {
+
+        string retVal = null;
+
+        switch (kind)
+        {
+            case "1":
+
+
+                switch (Category)
+                {
+                    case "1":
+                        retVal = "英文";
+                        break;
+                    case "2":
+                        retVal = "日文";
+                        break;
+                    case "3":
+                        retVal = "韓文";
+                        break;
+                }
+
+
+
+                break;
+            case "2":
+
+                switch (Category)
+                {
+                    case "1":
+                        retVal = "英文影片";
+                        break;
+                    case "2":
+                        retVal = "日文影片";
+                        break;
+                    case "3":
+                        retVal = "韓文影片";
+                        break;
+                }
+
+
+                break;
+            case "3":
+
+                switch (Category)
+                {
+                    case "1":
+                        retVal = "英文二手書";
+                        break;
+                    case "2":
+                        retVal = "日文二手書";
+                        break;
+                    case "3":
+                        retVal = "韓文二手書";
+                        break;
+                }
+
+
+
+                break;
+        }
+
+
+        return retVal;
+    }
+
+
+}

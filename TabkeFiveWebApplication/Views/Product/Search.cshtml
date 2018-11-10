@@ -1,0 +1,75 @@
+﻿@model IEnumerable<TFDBLibrary.producttbl>
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>搜尋" @ViewBag.keyword "</h2>
+
+
+<table id="myDataTalbe" class="display">
+    <thead>
+        <tr>
+            <th>課程名稱</th>
+            <th>介紹圖片</th>
+            <th>種類</th>
+            <th>語言</th>
+            <th>內容介紹</th>
+            <th>售價</th>
+            <th>人氣</th>
+            <th>評分</th>
+            <th>立即前往</th>
+        </tr>
+    </thead>
+</table>
+
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+@*<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>*@
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+
+<script>
+        $(document).ready(function () {
+
+            var kid = 0;
+            var key ='@ViewBag.keyword';
+            $('#myDataTalbe').DataTable({
+                "ajax": {
+                    "url": '@Url.Action("GetSearchProduct", "Product")',
+                    "type": "GET",
+                    "datatype": "json",
+                    "data": { 'keyword':key}
+                },
+                "columns": [
+                    { "data": "name", "Width": "10%" },
+                    {
+                        "data": "picture", "render": function (data) {
+                            return "<img style='height:70px; width:70px;' src='data:image/jpeg;base64," + data + "' />"
+                        }
+                    },
+                    { "data": "kind", "Width": "10%" },
+                    { "data": "category", "Width": "10%" },
+                    { "data": "intro", "Width": "10%" },
+                    { "data": "price", "Width": "10%" },
+                    { "data": "state", "Width": "10%" },
+                    { "data": "score", "Width": "10%" },
+                    {
+                        "data": "pid", "render": function (data) {
+                            return "<a id='' style='height:30px; width:40px;' href='@Url.Action("View", "ShoppingCart")/" + data + "'class='btn btn-primary'>前往</a>"
+                        }
+                    },
+                ],
+                "language": {
+                    "lengthMenu": "顯示 _MENU_ 數量 ",
+                    "info": "第_PAGE_頁 /共_PAGES_頁",
+                    "emptyTable": "錯誤.洽詢資料管理人員",
+                    "paginate": {
+                        "previous": "上一頁",
+                        "next": "下一頁"
+                    },
+                    "search": "尋找"
+                },
+            });
+        });
+</script>

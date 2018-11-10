@@ -1,0 +1,69 @@
+﻿@model IEnumerable<TFDBLibrary.note>
+
+
+
+<div id="turn-left" class="@(ViewBag.left ? "note-time-turn" : "note-time-unturn")">
+    <div class="note-span"><</div>
+</div>
+<div id="note-time-main" class="note-time-main">
+
+    @foreach (var item in Model)
+    {
+        <div id="n-@item.n_id" data-html="true" onclick="GetNoteByID(@item.n_id);" class="note-time-tag note-tag-click caption pop popover-div" data-toggle="popover" data-placement="top">
+            <div class="note-time-span">@item.n_title</div>
+        </div>
+
+        //  popover product
+        <div class="bs-example-modal-lg-@item.n_id n-@item.n_id   product-popover" data-html="true" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div class="product-popver-main">
+                    <div class="product-popver-head">
+                        <div class="popover-content-title">
+                            @Html.Action("GetUserName", "Account", new { id = item.mid })
+                        </div>
+                    </div>
+                    <div class="product-popver-body">
+                        <div class="popover-content-intro">
+                            @item.n_title
+                        </div>
+                        <div class="popover-content-price">
+                            <span>@item.n_grade</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    }
+
+</div>
+<div id="turn-right" class="@(ViewBag.right ? "note-time-turn" : "note-time-unturn")">
+    <div class="note-span">></div>
+</div>
+<script src="~/Scripts/popover.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.note-time-turn').click(TurnNoteBook);
+    
+
+        $(".pop").popover({ trigger: "hover focus", html: true, animation: false })
+            .on("mouseenter", function () {
+                var _this = this;
+
+                var popoverClass = "." + this.id;
+                var datacontent = $(popoverClass).html();
+                $(this).attr("data-content", datacontent);
+
+                $(this).popover("show");
+                $(".popover").on("mouseleave", function () {
+                    $(_this).popover('hide');
+                });
+            }).on("mouseleave", function () {
+                var _this = this;
+                setTimeout(function () {
+                    if (!$(".popover:hover").length) {
+                        $(_this).popover("hide");
+                    }
+                }, 50);
+            });
+    });
+</script>
+
+

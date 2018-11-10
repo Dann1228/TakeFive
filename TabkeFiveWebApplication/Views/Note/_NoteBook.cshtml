@@ -1,0 +1,61 @@
+﻿@model IEnumerable<TFDBLibrary.note>
+
+@foreach (var item in Model)
+{
+    if (ViewBag.edit)
+    {
+        <div class="note-main-head">
+            <div class="note-main-head-mid">@Html.Action("GetUserName", "Account", new { id = item.mid })</div>
+            <div id="title-@item.n_id" contenteditable="true" onblur="ChangeUserNote(@item.n_id);" class="note-main-head-date">@item.n_title</div>
+            <div class="note-main-head-date">日期 : @item.create_time</div>
+        </div>
+
+        <div id="content-@item.n_id" onblur="ChangeUserNote(@item.n_id);" contenteditable="true" class="note-main-book">
+            @Html.Raw(item.n_content)
+        </div>
+
+       
+            <script>
+
+            function ChangeUserNote(nid) {
+                var startime = currentpart * cutvideosec;
+                var endtime = (currentpart + 1) * cutvideosec;
+                var title = $('#title-' + nid).text();
+                var content = $('#content-' + nid).html();
+                if (title != "" && content != "") {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("ChangeUserNote","Note")',
+                    data: { 'nid': nid, 'title': title, 'content': content, 'starttime': startime, 'endtime': endtime},
+                }).done(function (result) {
+                    var pid = result;
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("GetAllNoteBook","Note")',
+                        data: { 'pid': pid, 'starttime': startime, 'endtime': endtime, 'skip': allskip },
+                    }).done(function (result) {
+                        $('#note-time-' + pid).html(result);
+                        });
+                    });
+                }
+
+            }
+            </script>
+            
+
+    }
+    else
+    {
+            <div class="note-main-head">
+                <div class="note-main-head-mid">@Html.Action("GetUserName", "Account", new { id = item.mid })</div>
+                <div id="title-@item.n_id" class="note-main-head-date">@item.n_title</div>
+                <div class="note-main-head-date">@item.create_time</div>
+            </div>
+
+        <div id="note-main-book" class="note-main-book">
+            @Html.Raw(item.n_content)
+        </div>
+
+    }
+}
+

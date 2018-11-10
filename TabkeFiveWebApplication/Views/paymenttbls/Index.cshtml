@@ -1,0 +1,82 @@
+﻿@model TabkeFiveWebApplication.ViewModels.paymenttblsViewModel
+
+@using PagedList.Mvc;
+
+
+@{
+    /**/
+
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/BKS_LayoutPage.cshtml";
+}
+
+<h2>訂單管理</h2>
+
+@using (Html.BeginForm("Index", "paymenttbls", FormMethod.Post))
+{
+    <div class="form-inline">
+        @Html.LabelFor(model => model.SelectPay.name)
+        @Html.TextBoxFor(model => model.SelectPay.name)
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <button class="btn btn-danger" type="submit">搜尋</button>
+    </div>
+}
+@*<form action="Index" method="post"></form>*@
+
+@if (Model.RequestPay != null)
+{
+    <table class="table table-bordered" style="background-color:#ffffff">
+        <thead>
+            <tr>
+                <th>@Html.LabelFor(model => model.RequestPay.FirstOrDefault().payid)</th>
+                <th>@Html.LabelFor(model => model.RequestPay.FirstOrDefault().name)</th>
+                <th>@Html.HiddenFor(model => model.RequestPay.FirstOrDefault().phone)</th>
+                <th>@Html.LabelFor(model => model.RequestPay.FirstOrDefault().addr)</th>
+                <th>@Html.LabelFor(model => model.RequestPay.FirstOrDefault().pay)</th>
+                <th>@Html.LabelFor(model => model.RequestPay.FirstOrDefault().paydate)</th>
+                <th>@Html.LabelFor(model => model.RequestPay.FirstOrDefault().memo)</th>
+                <th>功能</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.RequestPay)
+            {
+                <tr>
+                    <td>@item.payid</td>
+                    <td>@item.name</td>
+                    <td>@item.phone</td>
+                    <td>@item.addr</td>
+                    <td>@item.pay</td>
+                    <td>@item.paydate</td>
+                    <td>@item.memo</td>
+                    <td>
+                        @using (@Html.BeginForm("Edit", "paymenttbls", FormMethod.Post))
+                        {
+                            <input type="text" class="hidden" id="id" name="id" value="@item.payid" />
+                            <button class="btn btn-danger">修改</button>
+                        }
+                        @using (@Html.BeginForm("Delete", "paymenttbls", FormMethod.Post))
+                        {
+                            <input type="text" class="hidden" id="id" name="id" value="@item.payid" />
+                            <button class="btn btn-danger">刪除</button>
+                        }
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+    @Html.PagedListPager(Model.RequestPay, page => Url.Action("index", new { pageIndex = page }),
+    new PagedListRenderOptions
+    {
+        LinkToFirstPageFormat = "<< 第一頁",
+        LinkToPreviousPageFormat = "< 前一頁",
+        LinkToNextPageFormat = "後一頁 >",
+        LinkToLastPageFormat = "最末頁 >>",
+        DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+        DisplayLinkToLastPage = PagedListDisplayMode.Always,
+        DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+        DisplayLinkToNextPage= PagedListDisplayMode.Always,
+    })
+}

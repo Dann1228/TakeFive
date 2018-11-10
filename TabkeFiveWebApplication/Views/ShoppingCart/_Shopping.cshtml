@@ -1,0 +1,70 @@
+﻿@model IEnumerable<TFDBLibrary.producttbl>
+
+@foreach (var item in Model)
+{
+<div class="view-shopping-main">
+    <div class="col-md-2">
+        <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
+            <div class="mainflip">
+                <div class="frontside">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <p><img class=" img-fluid" src="@Url.Action("photo","Home",new { id=item.pid})" alt="card image"></p>
+                            <h4 class="card-title">@item.name</h4>
+                            <p class="card-text">售價:@item.price</p>
+                            <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="backside" style="word-break:break-all">
+                    <div class="card">
+                        <div class="card-body text-center mt-4">
+                            <h4 class="card-title">Sunlimetech</h4>
+                            <p class="card-text" id="backtext">@item.intro</p>
+                            <button type="button" class="btn  btn-primary" onclick="location.href='@Url.Action( "View", "ShoppingCart",new { id=item.pid})'">前往課程</button>
+                            <ul class="list-inline">
+                                <li class="list-inline-item">
+                                    <a class="social-icon text-xs-center" target="_blank" href="#">
+                                        <i class="fa fa-facebook"></i>
+                                    </a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="social-icon text-xs-center" target="_blank" href="#">
+                                        <i class="fa fa-twitter"></i>
+                                    </a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="social-icon text-xs-center" target="_blank" href="#">
+                                        <i class="fa fa-skype"></i>
+                                    </a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="social-icon text-xs-center" target="_blank" href="#">
+                                        <i class="fa fa-google"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+    <!-- Team member -->
+}
+<script>
+
+    $(function () {
+
+        var $len = 50; // 超過50個字以"..."取代
+        $(".backside p").each(function () {
+            if ($(this).text().length > $len) {
+                var $text = $(this).text().substring(0, $len - 1) + "...";
+                $(this).text($text);
+            }
+        });
+    });
+
+</script>

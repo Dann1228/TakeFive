@@ -1,0 +1,70 @@
+﻿@using Microsoft.AspNet.Identity;
+@model IEnumerable<TFDBLibrary.note>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2> @Html.Action("GetUserName", "Account", new { id = User.Identity.GetUserId()}) 的筆記紀錄</h2>
+
+<table id="NoteDataTalbe" class="display">
+    <thead>
+        <tr>
+            <th>影片名稱</th>
+            <th>時間點</th>
+            <th>筆記標題</th>
+            <th>筆記內容</th>
+            @*<th>人氣</th>*@
+            <th>日期</th>
+            <th>立即前往</th>
+        </tr>
+    </thead>
+</table>
+
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+@*<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>*@
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+
+<script>
+        $(document).ready(function () {
+
+            $('#NoteDataTalbe').DataTable({
+                "ajax": {
+                    "url": '@Url.Action("GetUserNote", "Note")',
+                    "type": "GET",
+                    "datatype": "json",
+                },
+                "columns": [
+                    { "data": "p_name", "Width": "10%" },
+                    {
+                        //"data": "n_id", "render": function (data) {
+                        //    return "<a href='/Note/GetNoteByTime/'" + data + "></a>"
+                        //}
+                        "data": "videotime", "Width": "10%"
+                    },
+                    { "data": "n_title", "Width": "10%" },
+                    { "data": "n_content", "Width": "10%" ,"Max-Height":"50px"},
+                    //{ "data": "n_grade", "Width": "10%" },
+                    { "data": "create_time", "Width": "10%" },
+                    {
+                        "data": "p_id", "render": function (data) {
+                            return "<a style='height:30px; width:40px;' href='@Url.Action("View","ShoppingCart")/" + data + "' class='btn btn-primary'>前往</a>"
+                        }
+                    },
+                ],
+                "language": {
+                    "lengthMenu": "顯示 _MENU_ 數量 ",
+                    "info": "第_PAGE_頁 /共_PAGES_頁",
+                    "emptyTable": "尚無任何購買產品",
+                    "paginate": {
+                        "previous": "上一頁",
+                        "next": "下一頁"
+                    },
+                    "search": "尋找"
+                },
+            });
+        });
+</script>

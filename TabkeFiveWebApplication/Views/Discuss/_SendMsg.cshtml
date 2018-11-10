@@ -1,0 +1,63 @@
+﻿@model TFDBLibrary.discuss
+
+<div class="disuss-content">
+    <div class="disuss-content-main">
+        @if (ViewBag.user)
+        {
+            using (Html.BeginForm("SendMsg", "Discuss", Model, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.EditorFor(Model => Model.d_content, new { htmlAttributes = new { @class = "", id = "txtMsg", autocomplete = "off" } })
+                <button id="btnSendMsg" class="btnsendmsg" type="button" disabled="disabled" value="@Model.p_id">留言</button>
+                //<button id="btnSendMsg" type="submit" disabled="disabled" value="@Model.p_id">留言</button>
+            }
+        }
+        else
+        {
+                <div class="discuss-unlogin">
+                    @Html.ActionLink("Login to Comment", "Login", "Account", new { @class = "discuss-unlogin-link" });
+                </div>
+        }
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#btnSendMsg').click(SendMsg);
+        $('#txtMsg').keyup(CheckMsg);
+        $('#txtMsg').keydown(function (event) {
+            if (event.which == 13) {
+
+            }
+        });
+    });
+
+    function SendMsg() {
+        // var id = "{ id:'" +$('#btnSendMsg').val() +'/'+ $('#txtMsg').val()+"'}" ;
+        var msg = {'id': $('#btnSendMsg').val() + '/' + $('#txtMsg').val()};
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SendMsg", "Discuss")', //'/Discuss/SendMsg'
+            data: msg
+            }).done(function (result){
+                $.ajax({
+                    type: "GET",
+                    url: '@Url.Action("Index", "Discuss")',
+                    data: {'id':result}
+                }).done(function (model) {
+                    $('#view-main').html(model);
+                });
+               });
+    }
+    function CheckMsg() {
+        if ($('#txtMsg').val() != "") {
+            $('#btnSendMsg').removeAttr("disabled");
+        } else {
+            $('#btnSendMsg').attr("disabled", "disabled");
+        }
+    }
+</script>
+    
+
+
+    

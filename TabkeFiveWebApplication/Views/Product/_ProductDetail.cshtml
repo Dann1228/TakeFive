@@ -1,0 +1,17 @@
+﻿@model IEnumerable<TabkeFiveWebApplication.Models.ViewModels.ProductViewModels>
+
+@foreach (var item in Model)
+{
+<div class="detail-main">
+    <div class="col-sm-2 text-center">影片名稱</div>
+    <div class="col-sm-10">@item.Name</div>
+</div>
+<div class="detail-main">
+    <div class="col-sm-2 text-center">影片介紹</div>
+    <div class="col-sm-10">@item.Intro</div>
+</div>
+<div class="detail-main">
+    <div class="col-sm-2 text-center">建立者</div>
+    <div class="col-sm-10">@Html.Action("GetUserName", "Account", new { id = item.MId })</div>
+</div>
+}

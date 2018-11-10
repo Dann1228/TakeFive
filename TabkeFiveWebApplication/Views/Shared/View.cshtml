@@ -1,0 +1,388 @@
+﻿@model IEnumerable<TabkeFiveWebApplication.Models.ViewModels.ProductViewModels>
+@{
+    ViewBag.Title = "View";
+    Layout = "~/Views/Shared/_LayoutMovie.cshtml";
+
+}
+
+<div style="       display: block;
+        clear: both;
+        content:" ";">
+
+    @foreach (var item in Model)
+    {
+
+        @*@Html.Partial("~/Views/Product/_ShowPhotoPartial.cshtml", item)*@
+
+    <div style="    position: relative;
+    float: left;   height: 40%;
+    width: 60%; ">
+
+        @if (ViewBag.Buy)
+        {
+            <div class="movie">
+                <div id="moviemain">
+                    <div class="movie-main">
+                        <div class="movie-main-body">
+                            <video  class="view-video"  onloadstart="Startload(@item.PId);" @*onplay="AutoChange(@item.PId);"*@ ontimeupdate="VideoTimeChange(@item.PId);" id="movie" preload="auto" controlsList="nodownload" controls="" loop="" poster="">
+                                <source src="@Url.Content(item.VidioUrl)" type="video/mp4" />
+                                您的瀏覽器不支援HTML 5影片播放標籤格式。
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="movie-cant">
+                <div id="moviemain-cant">
+                    <div class="movie-main-cant">
+                        <div class="movie-main-body-cant">
+                            <div>
+                                <img style="height:350px;width:450px;" src="@Html.Action("ShowPhoto","Product", new { id=item.PId })" />
+                                <div class="view-video-cantLook">
+                                    <div class="view-video-cantLook-span">購買進入觀賞</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+
+        @if (ViewBag.Buy)
+        {
+            <div id="view-scroll" class="view-ul-div">
+                <div id="view-detail" onclick="ViewMainDetail(@item.PId);" class="view-li-div">
+                    <span class="view-span">商品資訊</span>
+                </div>
+                <div id="view-comment" onclick="ViewMainComment(@item.PId);" class="view-li-div">
+                    <span class="view-span">留言區</span>
+                </div>
+
+                <div id="@string.Format("CurrentCart{0}", item.PId)" class="view-li-div CurrentCart">
+                    <span class="view-span">@Html.Action("CurrentCart", "Cart", new { id = item.PId })</span> 
+                </div>
+
+                <div id="view-grade" onclick="ViewMainGrade(@item.PId);" class="view-li-div">
+                    <span class="view-span">評分</span>
+                </div>
+            </div>
+            <div id="view-main" class="view-main">
+                @Html.Action("ProductDetail", "Product", new { id = item.PId })
+            </div>
+        }
+        else
+        {
+            <div class="view-list">
+                <div id="view-scroll" class="view-ul-div">
+                    <div id="view-detail" onclick="ViewMainDetail(@item.PId);" class="view-li-div">
+                        <span class="view-span">Details</span>
+                    </div>
+                    <div id="view-comment" onclick="ViewMainComment(@item.PId);" class="view-li-div">
+                        <span class="view-span">Comments</span>
+                    </div>
+
+                    <div id="@string.Format("CurrentCart{0}", item.PId)" class="CurrentCart">
+                        @Html.Action("CurrentCart", "Cart", new { id = item.PId })
+                    </div>
+                </div>
+                <div id="view-main" class="view-main">
+                    @Html.Action("ProductDetail", "Product", new { id = item.PId })
+                </div>
+            </div>
+        }
+
+    </div>
+
+
+
+    <div id="note" class="note">
+
+
+        @if (ViewBag.Buy)
+        {
+            <div id="note-main" class="note-main">
+
+            </div>
+
+            @*<div class="note-main-other">
+                <div class="note-main-other-btn">
+                    <<
+                </div>
+            </div>*@
+
+            <div id="note-time-@item.PId" class="note-time">
+                @*<div class="note-time-progress">
+                    <div class="progress progress-striped">
+                        <div class="progress-bar progress-bar-danger" role="progressbar"
+                             aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"
+                             >
+                        </div>
+                    </div>
+                </div>*@
+                @*<div id="turn-left" onclick="TurnNoteBook('left',@item.PId);" class="note-time-turn">
+                    <div class="note-span"><</div>
+                </div>
+                <div id="note-time-main" class="note-time-main">
+                </div>
+                <div id="turn-right" onclick="TurnNoteBook('right',@item.PId);" class="note-time-turn">
+                    <div class="note-span" >></div>
+                </div>*@
+            </div>
+
+
+
+
+            <div id="note-enter" class="note-enter">
+                <div class="note-enter-txt">
+                    <div id="note-enter-txt-title" class="note-enter-txt-title" contenteditable="true">
+                    </div>
+                    <div id="note-enter-txt-content" class="note-enter-txt-content" contenteditable="true"></div>
+                </div>
+
+                <div class="note-enter-tool">
+                    @*<div id="note-enter-btn" class="note-enter-btn">
+                        <div class="note-enter-span"></div>
+                    </div>
+
+
+                    <div id="note-enter-btn" class="note-enter-btn">
+                        <div class="note-enter-span"></div>
+                    </div>*@
+
+
+                    <div id="note-enter-btnClear" class="note-enter-btn">
+                        <div class="note-enter-span">清除</div>
+                    </div>
+
+
+                    <div id="note-enter-btnEnter" onclick="SendNote(@item.PId);" class="note-enter-btn">
+                        <div class="note-enter-span">確認</div>
+                    </div>
+
+
+                    @*<div id="note-enter-btnSetting" class="note-enter-btn">
+                        <div class="note-enter-span">設定</div>
+                    </div>*@
+                </div>
+            </div>
+        }
+
+
+
+
+        @*shopping*@
+        <div class="view-shopping-cart"> @Html.Action("GetLikeProduct", "ShoppingCart", new { category = item.SelectedCategories });</div>
+
+    </div>
+
+        @*<div class="setting">
+            <div class="setting-main">
+
+            </div>
+        </div>*@
+
+              
+    }
+</div>
+
+
+<script src="~/Scripts/popover.js"></script>
+<script>
+    function ViewMainGrade(pid) {
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetProductGrade", "Product")',
+            data: { 'pid': pid }
+        }).done(function (result) {
+            $('#view-main').html(result);
+        });
+    }
+
+        function ViewMainComment(pid) {
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("Index", "Discuss")',
+                data: {'id': pid}
+            }).done(function (result) {
+                $('#view-main').html(result);
+            });
+        }
+        function ViewMainDetail(pid) {
+               $.ajax({
+                type: "GET",
+                url: '@Url.Action("ProductDetail", "Product")',
+                data: {'id': pid}
+            }).done(function (result) {
+                $('#view-main').html(result);
+            });
+        }
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('#btnSendMsg').click(SendMsg);
+        $('#note-enter-btnClear').click(function () {
+            $('#note-enter-txt-content').text("");
+        });
+        $('#note-enter-btn').click(SendNote);
+
+        //black
+        $('#btnnote').click(function () {
+
+            $('#black').attr("class", "blackmovie");
+            $('body').attr("class", "blackmovie");
+
+            $('.movie').remove('class').attr('class', 'notemovie');
+            $('.movie-main').remove('class').attr('class', 'notemovie-main');
+            $('.movie-main-body').remove('class').attr('class', 'notemovie-main-body');
+        });
+
+      //  document.getElementById('movie').addEventListener("timeupdate", VideoTimeChange );
+        //document.getElementById('movie').addEventListener("pause", function () { clearInterval(timer); });
+    });
+
+    var cutvideosec = 60 ;
+    currentpart = -1;
+    allskip = 0;
+    //autochange = true;
+    //var intervalnote;
+    function Startload(pid) {
+        VideoTimeChange(pid);
+    }
+
+    //function AutoChange(pid) {
+    //    if (autochange) {
+    //        var tags = $('.note-tag-click');
+    //        var nums = Array(tags.length);
+    //        for (var x in tags) {
+    //            nums.push(x.id);
+    //        }
+    //        intervalnote = setInterval(function () {
+
+
+                
+    //        }, 2000);
+    //    }
+    //}
+    
+    function TurnNoteBook() {
+        var str = this.id.split('-');
+        var pid = document.getElementsByClassName('note-time')[0].id.split('-');
+        var startime = currentpart * cutvideosec;
+        var endtime = (currentpart + 1) * cutvideosec;
+        if (str[1] == 'left') {
+            allskip--;
+             $.ajax({
+                type: "GET",
+                url: '@Url.Action("GetAllNoteBook","Note")',
+                data: { 'pid': pid[2], 'starttime': startime, 'endtime': endtime, 'skip': allskip },
+            }).done(function (result) {
+                $('#note-time-' + pid[2]).html(result);
+            });
+        } else {
+            allskip++;
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("GetAllNoteBook","Note")',
+                data: { 'pid': pid[2], 'starttime': startime, 'endtime': endtime, 'skip': allskip },
+            }).done(function (result) {
+                $('#note-time-' + pid[2]).html(result);
+            });
+        }
+    }
+    function VideoTimeChange(pid) {
+        allskip = 0;
+        var current = (document.getElementById('movie').currentTime * 10 % 10) >= 5 ? document.getElementById('movie').currentTime.toFixed() - 1 : document.getElementById('movie').currentTime.toFixed();
+        var part = ((current / cutvideosec) * 10 % 10) >= 5 ? (current / cutvideosec).toFixed() - 1 : (current / cutvideosec).toFixed();
+        if (currentpart != part) {
+            currentpart = part;
+            //todo  video time change to do
+
+            var startime = currentpart * cutvideosec;
+            var endtime = (currentpart + 1) * cutvideosec;
+
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("GetAllNoteBook","Note")',
+                data: { 'pid': pid, 'starttime': startime, 'endtime': endtime, 'skip': allskip },
+            }).done(function (result) {
+                $('#note-time-' + pid).html(result);
+            });
+        }
+    }
+
+    function SendNote(pid) {
+        var title = $('#note-enter-txt-title').text();
+        var content = $('#note-enter-txt-content').html();
+        var videotime = document.getElementById('movie').currentTime;
+        var startime = currentpart * cutvideosec;
+        var endtime = (currentpart + 1) * cutvideosec;
+        if (title != "" && content != "") {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("SendtoNote", "Note")',   @*'@Url.Action("SendtoNote", "Note")'*@
+                data: {
+                    'title': title,
+                    'videotime': videotime,
+                    'content': content,
+                    'pid': pid,
+                },
+            }).done(function (result) {
+                var pid = result;
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("GetAllNoteBook","Note")',
+                        data: { 'pid': pid, 'starttime': startime, 'endtime': endtime, 'skip': allskip },
+                    }).done(function (result) {
+                        $('#note-time-' + pid).html(result);
+                        });
+                });
+        } else {
+            alert('請輸入標題跟內容...');
+        }
+
+    }
+
+    function SendMsg() {
+        // var id = "{ id:'" +$('#btnSendMsg').val() +'/'+ $('#txtMsg').val()+"'}" ;
+        var msg = {'id': $('#btnSendMsg').val() + '/' + $('#txtMsg').val()};
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SendMsg", "Discuss")', //'/Discuss/SendMsg'
+            data: msg
+            }).done(function (result){
+                $.ajax({
+                    type: "GET",
+                    url: '@Url.Action("Index", "Discuss")',
+                    data: {'id':result}
+                }).done(function (model) {
+                    $('#discussDiv').html(model);
+                });
+               });
+    }
+
+
+    function GetNoteByID(nid) {
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetNoteByID", "Note")',
+            data: { 'nid': nid }
+        }).done(function (result) {
+            $('#note-main').html(result);
+            });
+        var tag = document.getElementsByClassName('note-tag-click');
+        for (i = 0; i < tag.length; i++){
+            tag[i].className = "note-time-tag note-tag-click";
+        }
+       // tag.className = "note-time-tag note-tag-click";
+      //  $('.note-tag-click').attr("class", "note-time-tag note-tag-click ");
+        $('#n-' + nid).attr("class", "note-time-tag-click note-tag-click ");
+    }
+
+</script>
+
